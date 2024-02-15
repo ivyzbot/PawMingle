@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import {
   Avatar,
   Box,
@@ -13,8 +14,79 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Helmet } from 'react-helmet-async';
+import { hashData } from '../utilities/security';
+import { useSignupMutation } from '../hooks/userHook';
 
 export default function Signup() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    isAdmin: false,
+  });
+  const [disable, setDisable] = useState(true);
+  const { mutateAsync: signup, isLoading } = useSignupMutation();
+  const navigate = useNavigate();
+
+  function handleInputChange(evt) {
+    const { name, value } = evt.target;
+    let newFormData = {};
+    if (name !== 'isAdmin') {
+      newFormData = {
+        ...formData,
+        [name]: value,
+      };
+    } else if (name === 'isAdmin') {
+      newFormData = {
+        ...formData,
+        isAdmin: !formData.isAdmin,
+      };
+    }
+    setDisable(checkPassword(newFormData));
+    setFormData(newFormData);
+  }
+
+  // console.log('Signup Form data:', formData);
+
+  function checkPassword(formData) {
+    if (
+      !formData.password ||
+      !formData.confirmPassword ||
+      formData.password !== formData.confirmPassword
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  function hashPassword() {
+    var currForm = { ...formData };
+    if (currForm.password) {
+      console.log('Signup - original password:', currForm.password);
+      var hash = hashData(currForm.password);
+      currForm.password = hash.hash;
+      currForm.salt = hash.salt;
+      currForm.iterations = hash.iterations;
+    }
+    return currForm;
+  }
+
+  async function handleSubmit(evt) {
+    try {
+      evt.preventDefault();
+      const formDataNew = hashPassword();
+      delete formDataNew.error;
+      delete formDataNew.confirmPassword;
+      console.log(formDataNew);
+      const data = await signup(formDataNew);
+      // console.log('Signup API - return data:', data);
+      navigate('/Signin');
+    } catch (err) {
+      console.log('Signup - submit error:', err);
+    }
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <Helmet>
@@ -38,18 +110,19 @@ export default function Signup() {
         <Box
           component="form"
           noValidate
-          // onSubmit={handleSubmit}
+          onChange={handleInputChange}
+          onSubmit={handleSubmit}
           sx={{ mt: 3 }}
         >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12}>
               <TextField
-                autoComplete="given-name"
-                name="userName"
+                autoComplete="name"
+                name="name"
                 required
                 fullWidth
-                id="userName"
-                label="User Name"
+                id="name"
+                label="Usename"
                 autoFocus
               />
             </Grid>
@@ -87,7 +160,7 @@ export default function Signup() {
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="isAdmin" color="primary" />}
+                control={<Checkbox name="isAdmin" color="primary" />}
                 label="Is Admin"
               />
             </Grid>
@@ -97,6 +170,7 @@ export default function Signup() {
             fullWidth
             variant="contained"
             sx={{ mt: 2, mb: 2 }}
+            disabled={disable}
           >
             Sign Up
           </Button>
