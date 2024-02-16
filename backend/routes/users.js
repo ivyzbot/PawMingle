@@ -6,7 +6,7 @@ var router = express.Router();
 // under the route /users
 
 router.post('/signup', usersCtrl.signup);
-router.get('/signin', usersCtrl.getSigninDetails);
+router.get('/signin/:email', usersCtrl.getSigninDetails);
 router.patch('/signin', usersCtrl.signin);
 
 // router.post('/signout', usersCtrl.signout);

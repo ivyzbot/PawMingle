@@ -22,9 +22,9 @@ async function getUser(body) {
     return { success: false, error: 'missing email' };
   }
 
-  console.log('User Model - Get user email in body:', body.email);
+  // console.log('User Model - Get user email in body:', body.email);
   const userEmail = decodeURIComponent(body.email);
-  console.log('User Model - Get user email in body (decoded)', userEmail);
+  // console.log('User Model - Get user email in body (decoded)', userEmail);
   const signinDetails = await usersDao
     .findOne({
       email: userEmail,

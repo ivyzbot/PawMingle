@@ -22,10 +22,12 @@ async function signup(req, res) {
     res.status(500).json({ errorMsg: err.message });
   }
 }
-async function getSigninDetails(req, res) {
-  try {
-    const userData = await usersMdl.getUser(req.body);
 
+async function getSigninDetails(req, res) {
+  const email = req.params.email;
+  console.log('model email', email);
+  try {
+    const userData = await usersMdl.getUser({ email: email });
     if (!userData.success) {
       res.status(400).json({ errorMsg: userData.error });
       return;
