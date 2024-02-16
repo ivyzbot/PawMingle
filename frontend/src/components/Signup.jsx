@@ -26,7 +26,7 @@ export default function Signup() {
     isAdmin: false,
   });
   const [disable, setDisable] = useState(true);
-  const { mutateAsync: signup, isLoading } = useSignupMutation();
+  const { mutateAsync: signup } = useSignupMutation();
   const navigate = useNavigate();
 
   function handleInputChange(evt) {
@@ -79,9 +79,10 @@ export default function Signup() {
       delete formDataNew.error;
       delete formDataNew.confirmPassword;
       console.log(formDataNew);
-      const data = await signup(formDataNew);
+      await signup(formDataNew);
+      // const data = await signup(formDataNew);
       // console.log('Signup API - return data:', data);
-      navigate('/Signin');
+      navigate('/signin');
     } catch (err) {
       console.log('Signup - submit error:', err);
     }
