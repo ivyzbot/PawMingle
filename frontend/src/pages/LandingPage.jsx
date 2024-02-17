@@ -1,7 +1,6 @@
 import { Outlet } from 'react-router';
-import './App.css';
 
-function App() {
+function LandingPage() {
   return (
     <>
       <Outlet />
@@ -9,4 +8,4 @@ function App() {
   );
 }
 
-export default App;
+export default LandingPage;
