@@ -62,7 +62,7 @@ export default function Signin() {
       const token = await signin(newFormData);
       storeToken(token);
       // console.log('Signin - token:', token);
-      navigate(`/feeds`);
+      navigate(`/home/jobs`);
     } catch (err) {
       console.log('Signin - submit error:', err);
     }
