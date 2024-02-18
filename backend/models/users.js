@@ -6,6 +6,7 @@ module.exports = {
   createUser,
   getUser,
   signinUser,
+  signoutUser,
 };
 
 async function createUser(body) {
@@ -68,7 +69,21 @@ async function signinUser(body) {
     { token: token, expire_at: expiry }
   );
 
-  console.log('User Model - Updated user details:', userDataUpdated);
+  console.log('User Model - Signin:', userDataUpdated);
 
   return { success: true, data: token };
+}
+
+async function signoutUser(body) {
+  if (!body.hasOwnProperty('email')) {
+    return { success: false, error: 'missing email' };
+  }
+  const userDataUpdated = await usersDao.updateOne(
+    { email: body.email },
+    { token: null, expire_at: null }
+  );
+
+  console.log('User Model - Signout:', userDataUpdated);
+
+  return { success: true, data: userDataUpdated };
 }

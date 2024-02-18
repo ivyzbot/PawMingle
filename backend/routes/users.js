@@ -8,8 +8,8 @@ var router = express.Router();
 router.post('/signup', usersCtrl.signup);
 router.get('/signin/:email', usersCtrl.getSigninDetails);
 router.patch('/signin', usersCtrl.signin);
+router.patch('/signout', usersCtrl.signout);
 
-// router.post('/signout', usersCtrl.signout);
 // router.patch('/update', usersCtrl.updateDetails);
 
 module.exports = router;
