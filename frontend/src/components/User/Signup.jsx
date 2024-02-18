@@ -14,8 +14,8 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Helmet } from 'react-helmet-async';
-import { hashData } from '../utilities/security';
-import { useSignupMutation } from '../hooks/userHook';
+import { hashData } from '../../utilities/security';
+import { useSignupMutation } from '../../hooks/userHook';
 
 export default function Signup() {
   const [formData, setFormData] = useState({

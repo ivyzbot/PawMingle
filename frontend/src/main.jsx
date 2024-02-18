@@ -13,27 +13,25 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import LandingPage from './pages/LandingPage.jsx';
 import Feeds from './pages/Feeds.jsx';
-import Jobs from './pages/Jobs.jsx';
-import './index.css';
-import Signup from './components/Signup.jsx';
-import Signin from './components/Signin.jsx';
+import Jobs from './components/Jobs/Jobs.jsx';
+import Signup from './components/User/Signup.jsx';
+import Signin from './components/User/Signin.jsx';
 import Footer from './components/Layout/Footer.jsx';
 import Homepage from './pages/Homepage.jsx';
+import './index.css';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
-      <Route path="/" element={<Footer />}>
-        <Route path="/" element={<LandingPage />}>
-          <Route index={true} element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-        </Route>
-        <Route path="/home" element={<Homepage />}>
-          <Route path="jobs" element={<Jobs />} />
-          <Route path="feeds" element={<Feeds />} />
-        </Route>
+    <Route path="/" element={<Footer />}>
+      <Route path="/" element={<LandingPage />}>
+        <Route index={true} element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
       </Route>
-    </>
+      <Route path="/home" element={<Homepage />}>
+        <Route path="jobs" element={<Jobs />} />
+        <Route path="feeds" element={<Feeds />} />
+      </Route>
+    </Route>
   )
 );
 

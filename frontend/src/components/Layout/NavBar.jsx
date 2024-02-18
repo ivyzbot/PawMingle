@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router';
+import { useSignoutMutation } from '../../hooks/userHook';
+import { UserContext } from '../../pages/Homepage';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,9 +19,12 @@ import AdbIcon from '@mui/icons-material/Adb';
 const pages = ['Feeds', 'Jobs'];
 const settings = ['Update Password', 'Logout'];
 
-function NavBar() {
+export default function NavBar() {
+  const state = useContext(UserContext);
+  const { mutateAsync: signout } = useSignoutMutation();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (evt) => {
     setAnchorElNav(evt.currentTarget);
@@ -31,9 +37,17 @@ function NavBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  async function handleCloseUserMenu(evt) {
     setAnchorElUser(null);
-  };
+    switch (evt.target.textContent) {
+      case 'Logout':
+        await signout({ email: state.email });
+        navigate('/signin');
+        break;
+      case 'Update Password':
+        return;
+    }
+  }
 
   return (
     <AppBar position="static" color="secondary">
@@ -154,7 +168,11 @@ function NavBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={handleCloseUserMenu}
+                  name={setting}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -165,4 +183,3 @@ function NavBar() {
     </AppBar>
   );
 }
-export default NavBar;

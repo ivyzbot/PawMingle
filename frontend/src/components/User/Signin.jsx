@@ -15,8 +15,8 @@ import { Helmet } from 'react-helmet-async';
 import {
   useGetUserDetailsMutation,
   useSigninMutation,
-} from '../hooks/userHook';
-import { hashDataWithSaltRounds, storeToken } from '../utilities/security';
+} from '../../hooks/userHook';
+import { hashDataWithSaltRounds, storeToken } from '../../utilities/security';
 
 export default function Signin() {
   const [formData, setFormData] = useState({
