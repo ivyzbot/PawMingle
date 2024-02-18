@@ -18,6 +18,7 @@ import Signup from './components/User/Signup.jsx';
 import Signin from './components/User/Signin.jsx';
 import Footer from './components/Layout/Footer.jsx';
 import Homepage from './pages/Homepage.jsx';
+import CreateJob from './components/Jobs/CreateJob.jsx';
 import './index.css';
 
 const router = createBrowserRouter(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/home" element={<Homepage />}>
         <Route path="jobs" element={<Jobs />} />
+        <Route path="jobs/new" element={<CreateJob />} />
         <Route path="feeds" element={<Feeds />} />
       </Route>
     </Route>
@@ -37,8 +39,9 @@ const router = createBrowserRouter(
 
 const theme = createTheme({
   palette: {
-    primary: { main: '#ce93d8', text: '#e040fb' },
+    primary: { main: '#ce93d8' },
     secondary: { main: '#f48fb1' },
+    green: { main: '#aed581' },
   },
 });
 

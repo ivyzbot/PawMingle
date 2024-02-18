@@ -30,7 +30,7 @@ export default function Homepage() {
             <div style={{ backgroundColor: 'red' }}>User Info</div>
           </Grid>
           <Grid xs={8}>
-            <div style={{ backgroundColor: 'yellow' }}>
+            <div>
               {' '}
               <Outlet />
             </div>

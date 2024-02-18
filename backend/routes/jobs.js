@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var jobsCtrl = require('../controllers/jobs');
 
 // under the route /jobs
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
+router.post('/create', jobsCtrl.createJob);
 
 module.exports = router;
