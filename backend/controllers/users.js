@@ -4,7 +4,7 @@ module.exports = {
   signup,
   getSigninDetails,
   signin,
-  // signout,
+  signout,
   // updateDetails,
 };
 
@@ -53,5 +53,17 @@ async function signin(req, res) {
     res.status(500).json({ errorMsg: err.message });
   }
 }
-// async function signout(req, res) {}
+async function signout(req, res) {
+  try {
+    const data = await usersMdl.signoutUser(req.body);
+    if (!data.success) {
+      res.status(400).json({ errorMsg: data.error });
+      return;
+    }
+    console.log('controller-signout', data.data);
+    res.json(data.data);
+  } catch (err) {
+    res.status(500).json({ errorMsg: err.message });
+  }
+}
 // async function updateDetails(req, res) {}
