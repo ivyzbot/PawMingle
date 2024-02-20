@@ -8,6 +8,7 @@ export const UserContext = createContext({
   name: null,
   email: null,
   isAdmin: false,
+  userID: null,
 });
 
 export default function Homepage() {
@@ -30,7 +31,7 @@ export default function Homepage() {
             <div style={{ backgroundColor: 'red' }}>User Info</div>
           </Grid>
           <Grid xs={8}>
-            <div style={{ backgroundColor: 'yellow' }}>
+            <div>
               {' '}
               <Outlet />
             </div>

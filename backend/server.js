@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/users', usersRouter);
-app.use('/feeds', feedsRouter);
 app.use('/jobs', jobsRouter);
+app.use('/feeds', feedsRouter);
 
 module.exports = app;
