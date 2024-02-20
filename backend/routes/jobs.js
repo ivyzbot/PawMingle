@@ -4,5 +4,6 @@ var jobsCtrl = require('../controllers/jobs');
 
 // under the route /jobs
 router.post('/create', jobsCtrl.createJob);
+router.get('/getall', jobsCtrl.getAllJobs);
 
 module.exports = router;

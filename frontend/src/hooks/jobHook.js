@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import apiClient from '../apiClient/apiClient';
 
 function useCreateJobMutation() {
@@ -8,4 +8,11 @@ function useCreateJobMutation() {
   });
 }
 
-export { useCreateJobMutation };
+function useGetJobsQuery() {
+  return useQuery({
+    queryKey: ['jobs'],
+    queryFn: async () => (await apiClient.get(`jobs/getall`)).data,
+  });
+}
+
+export { useCreateJobMutation, useGetJobsQuery };
