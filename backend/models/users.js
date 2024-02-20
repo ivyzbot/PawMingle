@@ -55,6 +55,7 @@ async function signinUser(body) {
     name: userData.name,
     email: userData.email,
     is_admin: userData.isAdmin,
+    userID: userData._id,
   };
 
   const token = utilSecurity.createJWT(jwtPayload);

@@ -8,6 +8,7 @@ export const UserContext = createContext({
   name: null,
   email: null,
   isAdmin: false,
+  userID: null,
 });
 
 export default function Homepage() {
