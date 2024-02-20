@@ -35,6 +35,10 @@ const userSchema = new Schema(
       default: false,
       required: true,
     },
+    jobsTaken: {
+      type: [Schema.Types.ObjectId],
+      ref: 'Job',
+    },
   },
   {
     timestamps: true,

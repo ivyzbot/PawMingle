@@ -9,7 +9,7 @@ async function createJob(body) {
 }
 
 async function getAllJobs() {
-  const allJobs = await jobsDao.find({});
-  // console.log('Create new job: ', newJob);
+  const allJobs = await jobsDao.find({}).populate('posterID', ['_id', 'name']);
+  // console.log('Get all jobs: ', allJobs);
   return { success: true, data: allJobs };
 }
