@@ -1,6 +1,6 @@
 const jobsDao = require('../daos/jobs');
 
-module.exports = { createJob, getAllJobs, updateJob };
+module.exports = { createJob, getAllJobs, updateJob, getOneJob };
 
 async function createJob(body) {
   const newJob = await jobsDao.create(body);
@@ -30,4 +30,13 @@ async function updateJob(jobID, body) {
   await jobData.save();
   // console.log('Update job: ', jobData);
   return { success: true, data: jobData };
+}
+
+async function getOneJob(jobID) {
+  const allJobs = await jobsDao
+    .findById(jobID)
+    .populate('posterID', ['_id', 'name'])
+    .populate('candidates', ['_id', 'name']);
+  // console.log('Get all jobs: ', allJobs);
+  return { success: true, data: allJobs };
 }
