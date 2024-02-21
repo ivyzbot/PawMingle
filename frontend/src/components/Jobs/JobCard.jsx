@@ -11,7 +11,6 @@ import {
   Card,
   CardActions,
   Avatar,
-  IconButton,
 } from '@mui/material';
 
 export default function JobCard({ jobData }) {
@@ -97,7 +96,7 @@ export default function JobCard({ jobData }) {
       </CardContent>
       <CardActions>
         {states.userID === jobData.posterID._id ? (
-          <PosterButtons />
+          <PosterButtons jobID={jobData._id} />
         ) : (
           <ViewerButtons
             isInCandidate={isInCandidate}
