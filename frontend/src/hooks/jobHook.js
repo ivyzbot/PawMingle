@@ -15,4 +15,14 @@ function useGetJobsQuery() {
   });
 }
 
-export { useCreateJobMutation, useGetJobsQuery };
+function useUpdateJobMutation() {
+  return useMutation({
+    mutationFn: async (variable) => {
+      const body = variable.body;
+      const jobID = variable.jobID;
+      return (await apiClient.patch(`jobs/update/${jobID}`, body)).data;
+    },
+  });
+}
+
+export { useCreateJobMutation, useGetJobsQuery, useUpdateJobMutation };

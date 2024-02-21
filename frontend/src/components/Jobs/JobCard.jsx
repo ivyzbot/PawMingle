@@ -17,6 +17,9 @@ import {
 export default function JobCard({ jobData }) {
   const states = useContext(UserContext);
   // console.log('States: ', states);
+  // {name: 'ivy2', email: 'ivy2@pawmingle.com', is_admin: false, userID: '65d0d2a05664790bf8762f92'}
+  const isInCandidate = jobData.candidates.includes(states.userID);
+  const isSelected = jobData.selected === states.userID;
   return (
     <Card variant="outlined" sx={{ minWidth: 120, mt: 5 }}>
       <CardHeader
@@ -81,7 +84,7 @@ export default function JobCard({ jobData }) {
           color="text.secondary"
           gutterBottom
         >
-          {`Job Status: $${jobData.jobStatus}`}
+          {`Job Status: ${jobData.jobStatus}`}
         </Typography>
         <Typography
           component="div"
@@ -96,7 +99,12 @@ export default function JobCard({ jobData }) {
         {states.userID === jobData.posterID._id ? (
           <PosterButtons />
         ) : (
-          <ViewerButtons />
+          <ViewerButtons
+            isInCandidate={isInCandidate}
+            jobStatus={jobData.jobStatus}
+            isSelected={isSelected}
+            jobID={jobData._id}
+          />
         )}
       </CardActions>
     </Card>
