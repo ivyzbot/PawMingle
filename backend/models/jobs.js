@@ -15,6 +15,8 @@ async function getAllJobs() {
 }
 
 async function updateJob(jobID, body) {
+  // console.log('Update Job - jobID', jobID);
+  // console.log('Update Job - body', body);
   const jobData = await jobsDao.findById(jobID);
 
   for (let [key, val] of Object.entries(body)) {
