@@ -31,11 +31,10 @@ export default function JobDetailsCard() {
   let isLoading = false;
   let error = null;
   const [jobData, setJobData] = useState();
+  const [selected, setSelected] = useState(jobData ? jobData.selected : null);
 
   async function useGetOneJobQuery(jobID, setFn) {
-    console.log('Test');
     const jobDataRaw = (await apiClient.get(`jobs/getone/${jobID}`)).data;
-    console.log('jobData1', jobDataRaw.data);
     setFn(jobDataRaw.data);
   }
 
@@ -43,8 +42,7 @@ export default function JobDetailsCard() {
     useGetOneJobQuery(jobid, setJobData);
   }, [jobid]);
 
-  console.log('Job Data:', jobData);
-  // console.log('Test:', jobData.posterID.name[0]);
+  // console.log('Job Data:', jobData);
 
   return (
     <>
@@ -139,12 +137,16 @@ export default function JobDetailsCard() {
               Candidates:
             </Typography>
             {jobData.candidates.map((candidate) => (
-              <CadidateCard name={candidate.name} key={candidate._id} />
+              <CadidateCard
+                name={candidate.name}
+                key={candidate._id}
+                candidateid={candidate._id}
+                jobid={jobid}
+                selected={selected}
+                setSelected={setSelected}
+              />
             ))}
           </CardContent>
-          <CardActions>
-            <PosterButtons />
-          </CardActions>
         </Card>
       )}
     </>
