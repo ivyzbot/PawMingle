@@ -33,9 +33,17 @@ export default function NavBar() {
     setAnchorElUser(evt.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  function handleCloseNavMenu(evt) {
+    switch (evt.target.textContent) {
+      case 'Jobs':
+        navigate('/home/jobs');
+        break;
+      case 'Feeds':
+        navigate('/home/feeds');
+        break;
+    }
     setAnchorElNav(null);
-  };
+  }
 
   async function handleCloseUserMenu(evt) {
     setAnchorElUser(null);

@@ -25,11 +25,19 @@ function useUpdateJobMutation() {
   });
 }
 
-function useGetOneJobQuery(jobID) {
-  return useQuery({
-    queryKey: ['oneJob', jobID],
-    queryFn: async () => (await apiClient.get(`jobs/getone/${jobID}`)).data,
-  });
+// function useGetOneJobQuery(jobID) {
+//   console.log('useGetOneJobQuery is called with jobID:', jobID);
+//   return useQuery({
+//     queryKey: ['test', jobID],
+//     queryFn: async () => {
+//       console.log(`jobs/getone/${jobID}`);
+//       return (await apiClient.get(`jobs/getone/${jobID}`)).data;
+//     },
+//   });
+// }
+
+async function useGetOneJobQuery(jobID) {
+  return (await apiClient.get(`jobs/getone/${jobID}`)).data;
 }
 
 export {

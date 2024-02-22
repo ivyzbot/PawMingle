@@ -33,10 +33,10 @@ async function updateJob(jobID, body) {
 }
 
 async function getOneJob(jobID) {
-  const allJobs = await jobsDao
+  const onejob = await jobsDao
     .findById(jobID)
     .populate('posterID', ['_id', 'name'])
     .populate('candidates', ['_id', 'name']);
-  // console.log('Get all jobs: ', allJobs);
-  return { success: true, data: allJobs };
+  console.log('Get onejob: ', onejob);
+  return { success: true, data: onejob };
 }
