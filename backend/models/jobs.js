@@ -20,7 +20,7 @@ async function updateJob(jobID, body) {
   const jobData = await jobsDao.findById(jobID);
 
   for (let [key, val] of Object.entries(body)) {
-    if (key === 'description' || key === 'jobStatus') {
+    if (key === 'description' || key === 'jobStatus' || key === 'selected') {
       jobData[key] = val;
     }
     if (key === 'candidates') {
