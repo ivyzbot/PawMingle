@@ -11,7 +11,7 @@ function useCreateJobMutation() {
 function useGetJobsQuery() {
   return useQuery({
     queryKey: ['jobs'],
-    queryFn: async () => (await apiClient.get(`jobs/getall`)).data,
+    queryFn: async () => (await apiClient.get('jobs/getall')).data,
   });
 }
 
@@ -25,4 +25,16 @@ function useUpdateJobMutation() {
   });
 }
 
-export { useCreateJobMutation, useGetJobsQuery, useUpdateJobMutation };
+function useGetOneJobQuery(jobID) {
+  return useQuery({
+    queryKey: ['oneJob', jobID],
+    queryFn: async () => (await apiClient.get(`jobs/getone/${jobID}`)).data,
+  });
+}
+
+export {
+  useCreateJobMutation,
+  useGetJobsQuery,
+  useUpdateJobMutation,
+  useGetOneJobQuery,
+};

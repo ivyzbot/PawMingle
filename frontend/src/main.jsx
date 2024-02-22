@@ -10,7 +10,7 @@ import {
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import './index.css';
 import LandingPage from './pages/LandingPage.jsx';
 import Feeds from './pages/Feeds.jsx';
 import Jobs from './components/Jobs/Jobs.jsx';
@@ -19,7 +19,7 @@ import Signin from './components/User/Signin.jsx';
 import Footer from './components/Layout/Footer.jsx';
 import Homepage from './pages/Homepage.jsx';
 import CreateJob from './components/Jobs/CreateJob.jsx';
-import './index.css';
+import JobDetailsCard from './components/Jobs/JobDetailsCard.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +31,7 @@ const router = createBrowserRouter(
       <Route path="/home" element={<Homepage />}>
         <Route path="jobs" element={<Jobs />} />
         <Route path="jobs/new" element={<CreateJob />} />
+        <Route path="jobs/details" element={<JobDetailsCard />} />
         <Route path="feeds" element={<Feeds />} />
       </Route>
     </Route>

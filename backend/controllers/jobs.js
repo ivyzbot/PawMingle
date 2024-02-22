@@ -1,6 +1,6 @@
 const jobMdl = require('../models/jobs');
 
-module.exports = { createJob, getAllJobs, updateJob };
+module.exports = { createJob, getAllJobs, updateJob, getOneJob };
 
 async function createJob(req, res) {
   try {
@@ -34,7 +34,7 @@ async function getAllJobs(req, res) {
 
 async function updateJob(req, res) {
   const jobID = req.params.jobid;
-  console.log('update job - jobID: ', jobID);
+  // console.log('update job - jobID: ', jobID);
   try {
     const jobData = await jobMdl.updateJob(jobID, req.body);
     // console.log('controller-update job', jobData);
@@ -45,6 +45,22 @@ async function updateJob(req, res) {
     res.json(jobData);
   } catch (err) {
     console.log('controller-update job', err);
+    res.status(500).json({ errorMsg: err.message });
+  }
+}
+
+async function getOneJob(req, res) {
+  const jobID = req.params.jobid;
+  try {
+    const jobData = await jobMdl.getOneJob(jobID);
+    // console.log('controller-getOneJob', jobData);
+    if (!jobData.success) {
+      res.status(400).json({ errorMsg: jobData.error });
+      return;
+    }
+    res.json(jobData);
+  } catch (err) {
+    console.log('controller-get-one-job-err', err);
     res.status(500).json({ errorMsg: err.message });
   }
 }
