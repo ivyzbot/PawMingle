@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router';
 import { Button } from '@mui/material';
 
@@ -9,7 +8,7 @@ export default function PosterButtons({ jobID }) {
       color="primary"
       variant="outlined"
       size="small"
-      onClick={() => navigate('details', { state: { jobID } })}
+      onClick={() => navigate(`details/${jobID}`, { replace: true })}
     >
       View
     </Button>

@@ -1,5 +1,6 @@
-import { useContext } from 'react';
-import { useLocation } from 'react-router';
+import { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router';
+// import { useLocation } from 'react-router';
 import moment from 'moment';
 import PosterButtons from './PosterButtons';
 import { UserContext } from '../../pages/Homepage';
@@ -13,19 +14,41 @@ import {
   Avatar,
   Box,
 } from '@mui/material';
+import CadidateCard from './CandidateCard';
+import apiClient from '../../apiClient/apiClient';
 
 export default function JobDetailsCard() {
   const states = useContext(UserContext);
-  // console.log('States: ', states);
+  //   console.log('States: ', states);
   // {name: 'ivy2', email: 'ivy2@pawmingle.com', is_admin: false, userID: '65d0d2a05664790bf8762f92'}
-  const { state } = useLocation();
-  const { data: jobDataRaw, isLoading, error } = useGetOneJobQuery(state.jobID);
-  const jobData = jobDataRaw.data;
+  const params = useParams();
+  const { jobid } = params;
+  // const {
+  //   data: jobDataRaw,
+  //   isLoading,
+  //   error,
+  // } = useGetOneJobQuery(jobid);
+  let isLoading = false;
+  let error = null;
+  const [jobData, setJobData] = useState();
+
+  async function useGetOneJobQuery(jobID, setFn) {
+    console.log('Test');
+    const jobDataRaw = (await apiClient.get(`jobs/getone/${jobID}`)).data;
+    console.log('jobData1', jobDataRaw.data);
+    setFn(jobDataRaw.data);
+  }
+
+  useEffect(() => {
+    useGetOneJobQuery(jobid, setJobData);
+  }, [jobid]);
+
   console.log('Job Data:', jobData);
+  // console.log('Test:', jobData.posterID.name[0]);
 
   return (
     <>
-      {isLoading ? (
+      {!jobData ? (
         <Box>Loading</Box>
       ) : error ? (
         <Box>Error</Box>
@@ -107,6 +130,17 @@ export default function JobDetailsCard() {
             >
               {`Description: ${jobData.description}`}
             </Typography>
+            <Typography
+              component="div"
+              variant="subtitle1"
+              color="text.secondary"
+              gutterBottom
+            >
+              Candidates:
+            </Typography>
+            {jobData.candidates.map((candidate) => (
+              <CadidateCard name={candidate.name} key={candidate._id} />
+            ))}
           </CardContent>
           <CardActions>
             <PosterButtons />
