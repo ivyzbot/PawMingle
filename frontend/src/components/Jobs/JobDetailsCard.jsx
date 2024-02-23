@@ -32,6 +32,9 @@ export default function JobDetailsCard() {
   let error = null;
   const [jobData, setJobData] = useState();
   const [selected, setSelected] = useState(jobData ? jobData.selected : null);
+  const [jobStatus, setJobStatus] = useState(
+    jobData ? jobData.jobStatus : 'Pending'
+  );
 
   async function useGetOneJobQuery(jobID, setFn) {
     const jobDataRaw = (await apiClient.get(`jobs/getone/${jobID}`)).data;
@@ -142,8 +145,8 @@ export default function JobDetailsCard() {
                 key={candidate._id}
                 candidateid={candidate._id}
                 jobid={jobid}
-                selected={selected}
-                setSelected={setSelected}
+                jobData={jobData}
+                setJobData={setJobData}
               />
             ))}
           </CardContent>

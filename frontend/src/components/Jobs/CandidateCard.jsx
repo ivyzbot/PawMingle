@@ -6,25 +6,39 @@ export default function CadidateCard({
   name,
   jobid,
   candidateid,
-  selected,
-  setSelected,
+  jobData,
+  setJobData,
 }) {
   // console.log('selected:', selected);
   const { mutateAsync: updateJob } = useUpdateJobMutation();
-  const [disabled, setDisabled] = useState(false);
   // const buttonInitialStatus =
-  const [isCandidate, setIsCandidate] = useState(candidateid === selected);
+  const [isCandidate, setIsCandidate] = useState(
+    candidateid === jobData.selected
+  );
 
   async function handleSelect() {
-    const updateJobBody = { selected: candidateid };
+    const updateJobBody = { selected: candidateid, jobStatus: 'Taken' };
     const updatedJob = await updateJob({
       jobID: jobid,
       body: updateJobBody,
     });
-    setSelected(true);
+    setJobData({
+      ...jobData,
+      selected: updatedJob.data.selected,
+      jobStatus: 'Taken',
+    });
     if (candidateid === updatedJob.data.selected) {
       setIsCandidate(true);
     }
+  }
+
+  async function handleComplete() {
+    const updateJobBody = { jobStatus: 'Completed' };
+    const updatedJob = await updateJob({
+      jobID: jobid,
+      body: updateJobBody,
+    });
+    setJobData({ ...jobData, jobStatus: 'Completed' });
   }
 
   return (
@@ -32,7 +46,7 @@ export default function CadidateCard({
       <Typography variant="subtitle1" gutterBottom>
         {name}
       </Typography>
-      {!selected ? (
+      {!jobData.selected ? (
         <Button
           color="primary"
           variant="outlined"
@@ -41,14 +55,23 @@ export default function CadidateCard({
         >
           Select
         </Button>
-      ) : isCandidate ? (
+      ) : isCandidate && jobData.jobStatus !== 'Completed' ? (
+        <Button
+          color="primary"
+          variant="outlined"
+          size="small"
+          onClick={handleComplete}
+        >
+          Job Completed
+        </Button>
+      ) : isCandidate && jobData.jobStatus === 'Completed' ? (
         <Button
           color="primary"
           variant="outlined"
           size="small"
           onClick={() => {}}
         >
-          Job Completed
+          Review
         </Button>
       ) : (
         <Button color="primary" variant="outlined" size="small" disabled>
