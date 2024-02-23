@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useUpdateJobMutation } from '../../hooks/jobHook';
+import AddReviewCard from '../Reviews/AddReviewCard';
 import { Box, Button, Typography } from '@mui/material';
 
 export default function CadidateCard({
@@ -15,6 +16,8 @@ export default function CadidateCard({
   const [isCandidate, setIsCandidate] = useState(
     candidateid === jobData.selected
   );
+  //Model open status:
+  const [open, setOpen] = useState(false);
 
   async function handleSelect() {
     const updateJobBody = { selected: candidateid, jobStatus: 'Taken' };
@@ -65,14 +68,17 @@ export default function CadidateCard({
           Job Completed
         </Button>
       ) : isCandidate && jobData.jobStatus === 'Completed' ? (
-        <Button
-          color="primary"
-          variant="outlined"
-          size="small"
-          onClick={() => {}}
-        >
-          Review
-        </Button>
+        <Box>
+          <Button
+            color="primary"
+            variant="outlined"
+            size="small"
+            onClick={() => setOpen(true)}
+          >
+            Review
+          </Button>
+          <AddReviewCard open={open} setOpen={setOpen} />
+        </Box>
       ) : (
         <Button color="primary" variant="outlined" size="small" disabled>
           Select
