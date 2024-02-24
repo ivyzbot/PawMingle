@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import moment from 'moment';
 import ViewerButtons from './ViewerButtons';
 import PosterButtons from './PosterButtons';
+import UserAvatar from '../User/UserAvatar';
 import { UserContext } from '../../pages/Homepage';
 import {
   CardHeader,
@@ -10,19 +11,21 @@ import {
   CardContent,
   Card,
   CardActions,
-  Avatar,
+  // Avatar,
 } from '@mui/material';
 
 export default function JobCard({ jobData }) {
   const states = useContext(UserContext);
-  // console.log('States: ', states);
+  console.log('States: ', states);
+  console.log('Job Data: ', jobData);
   // {name: 'ivy2', email: 'ivy2@pawmingle.com', is_admin: false, userID: '65d0d2a05664790bf8762f92'}
   const isInCandidate = jobData.candidates.includes(states.userID);
   const isSelected = jobData.selected === states.userID;
   return (
     <Card variant="outlined" sx={{ minWidth: 120, mt: 5 }}>
       <CardHeader
-        avatar={<Avatar aria-label="recipe">{jobData.posterID.name[0]}</Avatar>}
+        avatar={<UserAvatar name={jobData.posterID._id} />}
+        // avatar={<Avatar aria-label="recipe">{jobData.posterID.name[0]}</Avatar>}
         title={`${jobData.posterID.name} is looking for`}
         subheader={`Posted at ${jobData.createdAt}`}
       />
