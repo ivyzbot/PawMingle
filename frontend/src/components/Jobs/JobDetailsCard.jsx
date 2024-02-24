@@ -2,19 +2,12 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 // import { useLocation } from 'react-router';
 import moment from 'moment';
-import PosterButtons from './PosterButtons';
+// import PosterButtons from './PosterButtons';
 import { UserContext } from '../../pages/Homepage';
 import { useGetOneJobQuery } from '../../hooks/jobHook';
-import {
-  CardHeader,
-  Typography,
-  CardContent,
-  Card,
-  CardActions,
-  Avatar,
-  Box,
-} from '@mui/material';
+import { CardHeader, Typography, CardContent, Card, Box } from '@mui/material';
 import CadidateCard from './CandidateCard';
+import UserAvatar from '../User/UserAvatar';
 import apiClient from '../../apiClient/apiClient';
 
 export default function JobDetailsCard() {
@@ -56,9 +49,7 @@ export default function JobDetailsCard() {
       ) : (
         <Card variant="outlined" sx={{ minWidth: 120, mt: 5 }}>
           <CardHeader
-            avatar={
-              <Avatar aria-label="recipe">{jobData.posterID.name[0]}</Avatar>
-            }
+            avatar={<UserAvatar name={jobData.posterID._id} />}
             title="You are looking for"
             subheader={`Posted at ${jobData.createdAt}`}
           />
