@@ -1,13 +1,30 @@
 import { useState } from 'react';
+import { useCreateReviewMutation } from '../../hooks/reviewHooks';
+import { useUpdateJobMutation } from '../../hooks/jobHook';
 import { Box, Button, Modal, Rating, Typography } from '@mui/material';
 
-export default function AddReviewCard({ open, setOpen }) {
+export default function AddReviewCard({ open, setOpen, jobData, setJobData }) {
   const [score, setScore] = useState(0);
-  console.log(score);
+  const { mutateAsync: postReview } = useCreateReviewMutation();
+  const { mutateAsync: updateJob } = useUpdateJobMutation();
+  //   console.log(jobData);
   function handleClose() {
     setOpen(false);
   }
-  function handleSubmit() {
+  async function handleSubmit() {
+    const reviewBody = {};
+    reviewBody.receiverID = jobData.selected;
+    reviewBody.reviewType = 'Provider';
+    reviewBody.giverID = jobData.posterID._id;
+    reviewBody.jobID = jobData._id;
+    reviewBody.score = score;
+    const jobBody = { jobStatus: 'Reviewed' };
+    await postReview(reviewBody);
+    const updatedJob = await updateJob({
+      jobID: jobData._id,
+      body: jobBody,
+    });
+    setJobData({ ...jobData, jobStatus: 'Reviewed' });
     setOpen(false);
   }
   return (

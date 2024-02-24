@@ -58,7 +58,9 @@ export default function CadidateCard({
         >
           Select
         </Button>
-      ) : isCandidate && jobData.jobStatus !== 'Completed' ? (
+      ) : isCandidate &&
+        jobData.jobStatus !== 'Completed' &&
+        jobData.jobStatus !== 'Reviewed' ? (
         <Button
           color="primary"
           variant="outlined"
@@ -67,17 +69,25 @@ export default function CadidateCard({
         >
           Job Completed
         </Button>
-      ) : isCandidate && jobData.jobStatus === 'Completed' ? (
+      ) : isCandidate &&
+        (jobData.jobStatus === 'Completed' ||
+          jobData.jobStatus === 'Reviewed') ? (
         <Box>
           <Button
             color="primary"
             variant="outlined"
             size="small"
             onClick={() => setOpen(true)}
+            disabled={jobData.jobStatus === 'Reviewed' ? true : false}
           >
             Review
           </Button>
-          <AddReviewCard open={open} setOpen={setOpen} />
+          <AddReviewCard
+            open={open}
+            setOpen={setOpen}
+            jobData={jobData}
+            setJobData={setJobData}
+          />
         </Box>
       ) : (
         <Button color="primary" variant="outlined" size="small" disabled>
