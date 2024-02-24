@@ -40,9 +40,17 @@ async function useGetOneJobQuery(jobID) {
   return (await apiClient.get(`jobs/getone/${jobID}`)).data;
 }
 
+function useGetJobCountQuery(userID) {
+  return useQuery({
+    queryKey: ['jobcount', userID],
+    queryFn: async () => (await apiClient.get(`jobs/getcount/${userID}`)).data,
+  });
+}
+
 export {
   useCreateJobMutation,
   useGetJobsQuery,
   useUpdateJobMutation,
   useGetOneJobQuery,
+  useGetJobCountQuery,
 };
