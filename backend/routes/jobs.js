@@ -6,6 +6,7 @@ var jobsCtrl = require('../controllers/jobs');
 router.post('/create', jobsCtrl.createJob);
 router.get('/getall', jobsCtrl.getAllJobs);
 router.get('/getone/:jobid', jobsCtrl.getOneJob);
+router.get('/getcount/:userid', jobsCtrl.getJobCount);
 router.patch('/update/:jobid', jobsCtrl.updateJob);
 
 module.exports = router;

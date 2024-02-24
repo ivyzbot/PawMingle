@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import apiClient from '../apiClient/apiClient';
 
 function useCreateReviewMutation() {
@@ -8,4 +8,12 @@ function useCreateReviewMutation() {
   });
 }
 
-export { useCreateReviewMutation };
+function useGetReviewCountQuery(userID) {
+  return useQuery({
+    queryKey: ['reviewCount', userID],
+    queryFn: async () =>
+      (await apiClient.get(`reviews/getcount/${userID}`)).data,
+  });
+}
+
+export { useCreateReviewMutation, useGetReviewCountQuery };

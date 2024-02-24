@@ -1,6 +1,6 @@
 const jobMdl = require('../models/jobs');
 
-module.exports = { createJob, getAllJobs, updateJob, getOneJob };
+module.exports = { createJob, getAllJobs, updateJob, getOneJob, getJobCount };
 
 async function createJob(req, res) {
   try {
@@ -61,6 +61,22 @@ async function getOneJob(req, res) {
     res.json(jobData);
   } catch (err) {
     console.log('controller-get-one-job-err', err);
+    res.status(500).json({ errorMsg: err.message });
+  }
+}
+
+async function getJobCount(req, res) {
+  const userID = req.params.userid;
+  try {
+    const jobData = await jobMdl.getJobCount(userID);
+    // console.log('controller-getJobCount', jobData);
+    if (!jobData.success) {
+      res.status(400).json({ errorMsg: jobData.error });
+      return;
+    }
+    res.json(jobData);
+  } catch (err) {
+    console.log('controller-get-job-count', err);
     res.status(500).json({ errorMsg: err.message });
   }
 }

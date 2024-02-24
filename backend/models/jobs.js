@@ -1,6 +1,6 @@
 const jobsDao = require('../daos/jobs');
 
-module.exports = { createJob, getAllJobs, updateJob, getOneJob };
+module.exports = { createJob, getAllJobs, updateJob, getOneJob, getJobCount };
 
 async function createJob(body) {
   const newJob = await jobsDao.create(body);
@@ -39,4 +39,12 @@ async function getOneJob(jobID) {
     .populate('candidates', ['_id', 'name']);
   console.log('Get onejob: ', onejob);
   return { success: true, data: onejob };
+}
+
+async function getJobCount(userID) {
+  const jobsPosted = await jobsDao.find({ posterID: userID }).countDocuments();
+  const jobsDone = await jobsDao.find({ selected: userID }).countDocuments();
+  const jobsCount = { jobsPosted: jobsPosted, jobsDone: jobsDone };
+  // console.log('Jobs Count: ', jobsCount);
+  return { success: true, data: jobsCount };
 }
