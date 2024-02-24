@@ -31,7 +31,7 @@ const jobSchema = new Schema(
     },
     jobStatus: {
       type: String,
-      enum: ['Pending', 'Taken', 'Completed'],
+      enum: ['Pending', 'Taken', 'Completed', 'Reviewed'],
       default: 'Pending',
       required: true,
     },

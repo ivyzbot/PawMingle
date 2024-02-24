@@ -8,7 +8,7 @@ require('./client/mongo');
 const cors = require('cors');
 
 var usersRouter = require('./routes/users');
-var feedsRouter = require('./routes/feeds');
+var reviewsRouter = require('./routes/reviews');
 var jobsRouter = require('./routes/jobs');
 
 var app = express();
@@ -22,6 +22,6 @@ app.use(cors());
 
 app.use('/users', usersRouter);
 app.use('/jobs', jobsRouter);
-app.use('/feeds', feedsRouter);
+app.use('/reviews', reviewsRouter);
 
 module.exports = app;
