@@ -1,5 +1,5 @@
 // import { useQuery } from '@tanstack/react-query';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import apiClient from '../apiClient/apiClient';
 import { removeToken } from '../utilities/security';
 
@@ -39,9 +39,32 @@ function useSignoutMutation() {
   });
 }
 
+function useAddPetMutation() {
+  return useMutation({
+    mutationFn: async (body) => {
+      // const userID = body.userID;
+      // const bodyToUpdate = {
+      //   petName: body.petName,
+      //   petDescription: body.petDescription,
+      //   imgURL: body.imgURL,
+      // };
+      return (await apiClient.patch(`users/addpet`, body)).data;
+    },
+  });
+}
+
+function useGetUserPetQuery(userID) {
+  return useQuery({
+    queryKey: ['userPet', userID],
+    queryFn: async () => (await apiClient.get(`users/getpet/${userID}`)).data,
+  });
+}
+
 export {
   useSignupMutation,
   useGetUserDetailsMutation,
   useSigninMutation,
   useSignoutMutation,
+  useAddPetMutation,
+  useGetUserPetQuery,
 };
