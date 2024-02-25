@@ -20,6 +20,9 @@ import Footer from './components/Layout/Footer.jsx';
 import Homepage from './pages/Homepage.jsx';
 import CreateJob from './components/Jobs/CreateJob.jsx';
 import JobDetailsCard from './components/Jobs/JobDetailsCard.jsx';
+import UserJobPage from './components/Jobs/UserJobPage.jsx';
+import UserReviewPage from './components/Reviews/UserReviewPage.jsx';
+import UserInfoCenter from './pages/UserInfoCenter.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,6 +35,10 @@ const router = createBrowserRouter(
         <Route path="jobs" element={<Jobs />} />
         <Route path="jobs/new" element={<CreateJob />} />
         <Route path="jobs/details/:jobid" element={<JobDetailsCard />} />
+        <Route path="user" element={<UserInfoCenter />}>
+          <Route path="jobs" element={<UserJobPage />} />
+          <Route path="reviews" element={<UserReviewPage />} />
+        </Route>
         <Route path="feeds" element={<Feeds />} />
       </Route>
     </Route>

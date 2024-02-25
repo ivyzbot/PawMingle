@@ -47,10 +47,18 @@ function useGetJobCountQuery(userID) {
   });
 }
 
+function useGetUserJobQuery(userID) {
+  return useQuery({
+    queryKey: ['userJob', userID],
+    queryFn: async () => (await apiClient.get(`jobs/getall/${userID}`)).data,
+  });
+}
+
 export {
   useCreateJobMutation,
   useGetJobsQuery,
   useUpdateJobMutation,
   useGetOneJobQuery,
   useGetJobCountQuery,
+  useGetUserJobQuery,
 };

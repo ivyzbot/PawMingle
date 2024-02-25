@@ -16,4 +16,15 @@ function useGetReviewCountQuery(userID) {
   });
 }
 
-export { useCreateReviewMutation, useGetReviewCountQuery };
+function useGetUserReviewQuery(userID) {
+  return useQuery({
+    queryKey: ['userReview', userID],
+    queryFn: async () => (await apiClient.get(`reviews/getall/${userID}`)).data,
+  });
+}
+
+export {
+  useCreateReviewMutation,
+  useGetReviewCountQuery,
+  useGetUserReviewQuery,
+};
