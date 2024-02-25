@@ -7,6 +7,8 @@ module.exports = {
   getUser,
   signinUser,
   signoutUser,
+  addPetToUser,
+  getUerPets,
 };
 
 async function createUser(body) {
@@ -87,4 +89,19 @@ async function signoutUser(body) {
   console.log('User Model - Signout:', userDataUpdated);
 
   return { success: true, data: userDataUpdated };
+}
+
+async function addPetToUser(body) {
+  const userData = await usersDao.findById(body.userID);
+  userData.petsOwn.push(body);
+  await userData.save();
+  return { success: true, data: userData };
+}
+
+async function getUerPets(userID) {
+  const petData = await usersDao
+    .findById(userID)
+    .populate('petsOwn')
+    .select('petsOwn');
+  return { success: true, data: petData };
 }

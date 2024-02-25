@@ -5,6 +5,8 @@ module.exports = {
   getSigninDetails,
   signin,
   signout,
+  addPetToUser,
+  getUerPets,
   // updateDetails,
 };
 
@@ -66,4 +68,36 @@ async function signout(req, res) {
     res.status(500).json({ errorMsg: err.message });
   }
 }
+
+async function addPetToUser(req, res) {
+  try {
+    const userData = await usersMdl.addPetToUser(req.body);
+    // console.log('controller-add pet', userData);
+    if (!userData.success) {
+      res.status(400).json({ errorMsg: userData.error });
+      return;
+    }
+    res.json(userData);
+  } catch (err) {
+    console.log('controller-add pet', err);
+    res.status(500).json({ errorMsg: err.message });
+  }
+}
+
+async function getUerPets(req, res) {
+  const userID = req.params.userid;
+  try {
+    const userData = await usersMdl.getUerPets(userID);
+    // console.log('controller-getUserPets', userData);
+    if (!userData.success) {
+      res.status(400).json({ errorMsg: userData.error });
+      return;
+    }
+    res.json(userData);
+  } catch (err) {
+    console.log('controller-get-user-pets-err', err);
+    res.status(500).json({ errorMsg: err.message });
+  }
+}
+
 // async function updateDetails(req, res) {}
