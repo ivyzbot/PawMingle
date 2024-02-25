@@ -1,10 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import UserAvatar from './UserAvatar';
 import { UserContext } from '../../pages/Homepage';
+import AddPetCard from './AddPetCard';
+import PetCard from './PetCard';
 import { Box, Button, Card, Rating, Typography } from '@mui/material';
 import { useGetJobCountQuery } from '../../hooks/jobHook';
 import { useGetReviewCountQuery } from '../../hooks/reviewHooks';
+import { useGetUserPetQuery } from '../../hooks/userHook';
 
 export default function UserInfoSide() {
   const states = useContext(UserContext);
@@ -21,17 +24,23 @@ export default function UserInfoSide() {
     isLoading: isReviewLoading,
     error: isReviewCountError,
   } = useGetReviewCountQuery(states ? states.userID : null);
+  const {
+    data: petData,
+    isLoading: isPetDataLoading,
+    error: isPetDataError,
+  } = useGetUserPetQuery(states ? states.userID : null);
+  const [open, setOpen] = useState(false);
 
-  // console.log('isLoading', isReviewLoading);
-  // console.log('error', isReviewCountError);
-  // console.log('reviewCount', reviewCount);
+  console.log('isLoading', isPetDataLoading);
+  console.log('error', isPetDataError);
+  console.log('reviewCount', petData);
 
   return (
     <Card sx={{ minHeight: 500, mt: 5 }}>
       <UserAvatar name={states ? states.userID : 'no user info'} />
-      {isJobCountLoading || isReviewLoading ? (
+      {isJobCountLoading || isReviewLoading || isPetDataLoading ? (
         <Typography>loading</Typography>
-      ) : isJobCountError || isReviewCountError ? (
+      ) : isJobCountError || isReviewCountError || isPetDataError ? (
         <Typography>{isJobCountError}</Typography>
       ) : (
         <>
@@ -68,6 +77,16 @@ export default function UserInfoSide() {
         </>
       )}
       <Button onClick={() => navigate('user/jobs')}> Me Page</Button>
+      <Button onClick={() => setOpen(true)}> Add My Pet</Button>
+      <AddPetCard open={open} setOpen={setOpen} />
+      <Box>
+        <Typography>My Pets:</Typography>
+        {!petData.data.petsOwn || petData.data.petsOwn.length === 0 ? (
+          <Typography>No Pets Yet</Typography>
+        ) : (
+          petData.data.petsOwn.map((pet) => <PetCard key={pet._id} pet={pet} />)
+        )}
+      </Box>
     </Card>
   );
 }

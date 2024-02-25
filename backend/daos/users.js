@@ -1,6 +1,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const petSchema = new Schema(
+  {
+    petName: {
+      type: String,
+      required: true,
+    },
+    petDescription: {
+      type: String,
+    },
+    imgURL: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const userSchema = new Schema(
   {
     name: {
@@ -39,6 +58,7 @@ const userSchema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: 'Job',
     },
+    petsOwn: [petSchema],
   },
   {
     timestamps: true,

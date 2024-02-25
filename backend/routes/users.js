@@ -9,6 +9,8 @@ router.post('/signup', usersCtrl.signup);
 router.get('/signin/:email', usersCtrl.getSigninDetails);
 router.patch('/signin', usersCtrl.signin);
 router.patch('/signout', usersCtrl.signout);
+router.patch('/addpet', usersCtrl.addPetToUser);
+router.get('/getpet/:userid', usersCtrl.getUerPets);
 
 // router.patch('/update', usersCtrl.updateDetails);
 
