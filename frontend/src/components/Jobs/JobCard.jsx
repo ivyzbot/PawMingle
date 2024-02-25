@@ -11,13 +11,14 @@ import {
   CardContent,
   Card,
   CardActions,
+  ImageListItem,
   // Avatar,
 } from '@mui/material';
 
 export default function JobCard({ jobData }) {
   const states = useContext(UserContext);
   // console.log('States: ', states);
-  // console.log('Job Data: ', jobData);
+  console.log('Job Data: ', jobData);
   // {name: 'ivy2', email: 'ivy2@pawmingle.com', is_admin: false, userID: '65d0d2a05664790bf8762f92'}
   const isInCandidate = jobData.candidates.includes(states.userID);
   const isSelected = jobData.selected === states.userID;
@@ -29,6 +30,11 @@ export default function JobCard({ jobData }) {
         title={`${jobData.posterID.name} is looking for`}
         subheader={`Posted at ${jobData.createdAt}`}
       />
+      {jobData.myPet ? (
+        <ImageListItem>
+          <img src={jobData.myPet.imgURL} />
+        </ImageListItem>
+      ) : null}
       <CardContent>
         <Typography
           component="div"
