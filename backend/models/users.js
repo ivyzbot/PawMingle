@@ -1,5 +1,6 @@
 // const { urlencoded } = require("express");
 const usersDao = require('../daos/users');
+const petsDao = require('../daos/pets');
 const utilSecurity = require('../utilities/security');
 
 module.exports = {
@@ -92,10 +93,13 @@ async function signoutUser(body) {
 }
 
 async function addPetToUser(body) {
-  console.log('body', body);
+  // console.log('body', body);
+  const petData = await petsDao.create(body);
+  // console.log('pet data', petData);
   const userData = await usersDao.findById(body.userID);
-  console.log('add pets to user:', userData);
-  userData.petsOwn.push(body);
+  // // console.log('add pets to user:', userData);
+  userData.petsOwn.push(petData._id);
+
   await userData.save();
   return { success: true, data: userData };
 }

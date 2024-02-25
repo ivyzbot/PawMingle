@@ -43,7 +43,8 @@ async function getOneJob(jobID) {
   const onejob = await jobsDao
     .findById(jobID)
     .populate('posterID', ['_id', 'name'])
-    .populate('candidates', ['_id', 'name']);
+    .populate('candidates', ['_id', 'name'])
+    .populate('myPet');
   console.log('Get onejob: ', onejob);
   return { success: true, data: onejob };
 }
