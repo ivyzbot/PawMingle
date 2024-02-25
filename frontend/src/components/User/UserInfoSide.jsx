@@ -31,9 +31,9 @@ export default function UserInfoSide() {
   } = useGetUserPetQuery(states ? states.userID : null);
   const [open, setOpen] = useState(false);
 
-  console.log('isLoading', isPetDataLoading);
-  console.log('error', isPetDataError);
-  console.log('reviewCount', petData);
+  // console.log('isLoading', isPetDataLoading);
+  // console.log('error', isPetDataError);
+  // console.log('reviewCount', petData);
 
   return (
     <Card sx={{ minHeight: 500, mt: 5 }}>
@@ -81,7 +81,10 @@ export default function UserInfoSide() {
       <AddPetCard open={open} setOpen={setOpen} />
       <Box>
         <Typography>My Pets:</Typography>
-        {!petData.data.petsOwn || petData.data.petsOwn.length === 0 ? (
+        {!petData ||
+        !petData.data ||
+        !petData.data.petsOwn ||
+        petData.data.petsOwn.length === 0 ? (
           <Typography>No Pets Yet</Typography>
         ) : (
           petData.data.petsOwn.map((pet) => <PetCard key={pet._id} pet={pet} />)

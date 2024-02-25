@@ -16,7 +16,10 @@ async function createJob(body) {
 }
 
 async function getAllJobs() {
-  const allJobs = await jobsDao.find({}).populate('posterID', ['_id', 'name']);
+  const allJobs = await jobsDao
+    .find({})
+    .populate('posterID', ['_id', 'name'])
+    .populate('myPet');
   // console.log('Get all jobs: ', allJobs);
   return { success: true, data: allJobs };
 }
@@ -43,8 +46,9 @@ async function getOneJob(jobID) {
   const onejob = await jobsDao
     .findById(jobID)
     .populate('posterID', ['_id', 'name'])
-    .populate('candidates', ['_id', 'name']);
-  console.log('Get onejob: ', onejob);
+    .populate('candidates', ['_id', 'name'])
+    .populate('myPet');
+  // console.log('Get onejob: ', onejob);
   return { success: true, data: onejob };
 }
 
@@ -60,12 +64,14 @@ async function getUserJobs(userID) {
   const postJobs = await jobsDao
     .find({ posterID: userID })
     .populate('posterID', ['_id', 'name'])
-    .populate('candidates', ['_id', 'name']);
+    .populate('candidates', ['_id', 'name'])
+    .populate('myPet');
   // console.log('Get userJobs: ', postJobs);
   const doneJobs = await jobsDao
     .find({ selected: userID })
     .populate('posterID', ['_id', 'name'])
-    .populate('candidates', ['_id', 'name']);
+    .populate('candidates', ['_id', 'name'])
+    .populate('myPet');
   const userJobs = { postJobs: postJobs, doneJobs: doneJobs };
   return { success: true, data: userJobs };
 }

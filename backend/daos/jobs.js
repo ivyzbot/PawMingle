@@ -43,6 +43,10 @@ const jobSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+    myPet: {
+      type: Schema.Types.ObjectId,
+      ref: 'Pet',
+    },
   },
   {
     timestamps: true,
