@@ -92,7 +92,9 @@ async function signoutUser(body) {
 }
 
 async function addPetToUser(body) {
+  console.log('body', body);
   const userData = await usersDao.findById(body.userID);
+  console.log('add pets to user:', userData);
   userData.petsOwn.push(body);
   await userData.save();
   return { success: true, data: userData };
