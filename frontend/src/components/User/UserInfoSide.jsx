@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router';
 import UserAvatar from './UserAvatar';
 import { UserContext } from '../../pages/Homepage';
 import { Box, Button, Card, Rating, Typography } from '@mui/material';
@@ -9,20 +10,21 @@ export default function UserInfoSide() {
   const states = useContext(UserContext);
   // const [reviewScores, setReviewScores] = useState()
   // console.log('User Info Side - user states:', states);
+  const navigate = useNavigate();
   const {
     data: jobCount,
     isLoading: isJobCountLoading,
     error: isJobCountError,
-  } = useGetJobCountQuery(states.userID);
+  } = useGetJobCountQuery(states ? states.userID : null);
   const {
     data: reviewCount,
     isLoading: isReviewLoading,
     error: isReviewCountError,
-  } = useGetReviewCountQuery(states.userID);
+  } = useGetReviewCountQuery(states ? states.userID : null);
 
   // console.log('isLoading', isReviewLoading);
   // console.log('error', isReviewCountError);
-  console.log('reviewCount', reviewCount);
+  // console.log('reviewCount', reviewCount);
 
   return (
     <Card sx={{ minHeight: 500, mt: 5 }}>
@@ -65,7 +67,7 @@ export default function UserInfoSide() {
           </Box>
         </>
       )}
-      <Button> Me Page</Button>
+      <Button onClick={() => navigate('user/jobs')}> Me Page</Button>
     </Card>
   );
 }
