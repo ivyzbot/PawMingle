@@ -51,6 +51,10 @@ const theme = createTheme({
     secondary: { main: '#f48fb1' },
     green: { main: '#aed581' },
     text: { main: '#aed581', secondary: '#f48fb1' },
+    light: { main: '#ffebee' },
+  },
+  typography: {
+    fontFamily: ['Lato', 'sans-serif'].join(','),
   },
 });
 
