@@ -71,7 +71,7 @@ export default function Signin() {
   return (
     <Container component="main" maxWidth="xs">
       <Helmet>
-        <title>Sign In</title>
+        <title>Pawmingle - Sign In</title>
       </Helmet>
       <CssBaseline />
       <Box
