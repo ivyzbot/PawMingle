@@ -28,8 +28,12 @@ export default function Homepage() {
     <>
       <UserContext.Provider value={tokenDetails}>
         <NavBar />
-        <Grid container spacing={2} sx={{ backgroundColor: 'grey.secondary' }}>
-          <Grid item xs>
+        <Grid
+          container
+          columnSpacing={8}
+          sx={{ backgroundColor: 'grey.secondary' }}
+        >
+          <Grid item xs={3.5}>
             <UserInfoSide />
           </Grid>
           <Grid item xs={6}>
