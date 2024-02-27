@@ -136,11 +136,17 @@ export default function Jobs() {
         <div>Error loading jobs</div>
       ) : (
         <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          {jobDataFiltered.map((jobsData) => (
-            <Grid key={jobsData._id} item xs={12}>
-              <JobCard jobData={jobsData} />
-            </Grid>
-          ))}
+          {jobDataFiltered
+            ? jobDataFiltered.map((jobsData) => (
+                <Grid key={jobsData._id} item xs={12}>
+                  <JobCard jobData={jobsData} />
+                </Grid>
+              ))
+            : jobsData.data.map((jobsData) => (
+                <Grid key={jobsData._id} item xs={12}>
+                  <JobCard jobData={jobsData} />
+                </Grid>
+              ))}
         </Grid>
       )}
     </Box>

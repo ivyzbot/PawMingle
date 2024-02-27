@@ -12,6 +12,7 @@ function useGetJobsQuery() {
   return useQuery({
     queryKey: ['jobs'],
     queryFn: async () => (await apiClient.get('jobs/getall')).data,
+    fetchPolicy: 'network-only',
   });
 }
 
