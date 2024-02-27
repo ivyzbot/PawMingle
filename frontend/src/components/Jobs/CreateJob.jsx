@@ -7,7 +7,9 @@ import { useGetUserPetQuery } from '../../hooks/userHook';
 import {
   Box,
   Button,
+  Card,
   FormControl,
+  Grid,
   ImageListItem,
   InputAdornment,
   InputLabel,
@@ -37,6 +39,8 @@ export default function CreateJob() {
     description: '',
     myPet: '',
   });
+
+  console.log('formData', formData);
   const urlSelected =
     petData &&
     petData.data &&
@@ -73,12 +77,21 @@ export default function CreateJob() {
       ) : isPetDataError ? (
         <Typography>{isPetDataError}</Typography>
       ) : (
-        <Box sx={{ mt: 10 }}>
+        <Card
+          sx={{
+            maxWidth: 800,
+            border: '1px solid',
+            borderColor: 'grey.main',
+            borderRadius: 5,
+            py: 4,
+          }}
+          elevation={0}
+        >
           {!petData || !petData.data || petData.data.petsOwn.length === 0 ? (
             <></>
           ) : (
             <Box>
-              <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
+              <FormControl sx={{ m: 2, minWidth: 180 }} size="medium">
                 <InputLabel>Select My Pet</InputLabel>
                 <Select
                   labelId="demo-simple-select-standard-label"
@@ -86,7 +99,11 @@ export default function CreateJob() {
                   label="none"
                   name="myPet"
                   onChange={handleChange}
+                  size="medium"
                 >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
                   {petData.data.petsOwn.map((pet) => (
                     <MenuItem key={pet._id} value={pet._id}>
                       {pet.petName}
@@ -94,106 +111,157 @@ export default function CreateJob() {
                   ))}
                 </Select>
               </FormControl>
-              <ImageListItem>
-                {formData.myPet ? <img src={urlSelected} /> : null}
+              <ImageListItem
+                sx={{
+                  maxWidth: '60%',
+                  height: 'auto',
+                  my: 2,
+                  mx: 'auto',
+                  borderRadius: '1-px',
+                }}
+              >
+                {formData.myPet ? (
+                  <img
+                    src={urlSelected}
+                    style={{
+                      borderRadius: '10px',
+                    }}
+                  />
+                ) : null}
               </ImageListItem>
             </Box>
           )}
 
-          <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
-            <InputLabel>JOB TYPE</InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              value={formData.jobType}
-              label="none"
-              name="jobType"
-              onChange={handleChange}
-            >
-              {JOB_TYPES.map((item) => (
-                <MenuItem key={item.value} value={item.value}>
-                  {item.value}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
-            <InputLabel>PET TYPE</InputLabel>
-            <Select
-              labelId="demo-simple-select-standard-label"
-              value={formData.petType}
-              label="none"
-              name="petType"
-              onChange={handleChange}
-            >
-              {PET_TYPES.map((item) => (
-                <MenuItem key={item.value} value={item.value}>
-                  {item.value}
-                </MenuItem>
-              ))}
-            </Select>
-            <Box>
-              <p>START TIME</p>
-              <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
+          <Grid container spacing={2} my={3} alignItems="center">
+            <Grid item xs={6}>
+              <Box display="flex" justifyContent="flex-start" paddingLeft={8}>
+                <FormControl sx={{ m: 2, minWidth: 250 }} size="medium">
+                  <InputLabel>JOB TYPE</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    value={formData.jobType}
+                    label="none"
+                    name="jobType"
+                    onChange={handleChange}
+                  >
+                    {JOB_TYPES.map((item) => (
+                      <MenuItem key={item.value} value={item.value}>
+                        {item.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Box display="flex" justifyContent="flex-start" paddingLeft={8}>
+                <FormControl sx={{ m: 2, minWidth: 250 }} size="medium">
+                  <InputLabel>PET TYPE</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-standard-label"
+                    value={formData.petType}
+                    label="none"
+                    name="petType"
+                    onChange={handleChange}
+                  >
+                    {PET_TYPES.map((item) => (
+                      <MenuItem key={item.value} value={item.value}>
+                        {item.value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Typography color="grey.dark" fontWeight={500}>
+                START TIME
+              </Typography>
+              <Box display="flex" justifyContent="flex-start" paddingLeft={8}>
+                <FormControl sx={{ m: 2, minWidth: 250 }} size="small">
+                  <TextField
+                    // label="FROM"
+                    variant="outlined"
+                    type="datetime-local"
+                    name="startTime"
+                    value={formData.startTime}
+                    onChange={handleChange}
+                    sx={{ label: { color: 'red' } }}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Typography color="grey.dark" fontWeight={500}>
+                END TIME
+              </Typography>
+              <Box display="flex" justifyContent="flex-start" paddingLeft={8}>
+                <FormControl sx={{ m: 2, minWidth: 250 }} size="small">
+                  <TextField
+                    // label="FROM"
+                    variant="outlined"
+                    type="datetime-local"
+                    name="endTime"
+                    value={formData.endTime}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Box display="flex" justifyContent="flex-start" paddingLeft={8}>
+                <FormControl sx={{ m: 2, minWidth: 250 }} size="small">
+                  <TextField
+                    label="Location"
+                    variant="outlined"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box display="flex" justifyContent="flex-start" paddingLeft={8}>
+                <FormControl sx={{ m: 2, minWidth: 250 }} size="small">
+                  <TextField
+                    label="Price"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">$</InputAdornment>
+                      ),
+                    }}
+                    name="price"
+                    value={formData.price}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="center" paddingLeft={2}>
+              <FormControl sx={{ mb: 4, width: '84%' }}>
                 <TextField
-                  // label="FROM"
-                  variant="outlined"
-                  type="datetime-local"
-                  name="startTime"
-                  value={formData.startTime}
+                  label="DESCRIPTION"
+                  placeholder="A detailed description tends to attract more audience..."
+                  multiline
+                  name="description"
+                  rows={4}
+                  value={formData.description}
                   onChange={handleChange}
                 />
               </FormControl>
             </Box>
-            <Box>
-              <p>END TIME</p>
-              <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
-                <TextField
-                  // label="FROM"
-                  variant="outlined"
-                  type="datetime-local"
-                  name="endTime"
-                  value={formData.endTime}
-                  onChange={handleChange}
-                />
-              </FormControl>
-            </Box>
-          </FormControl>
-          <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
-            <TextField
-              label="Location"
-              variant="outlined"
-              name="location"
-              value={formData.location}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
-            <TextField
-              label="Price"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                ),
-              }}
-              name="price"
-              value={formData.price}
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl sx={{ m: 2, minWidth: 180 }} size="small">
-            <TextField
-              label="DESCRIPTION"
-              placeholder="Let your audience to know more..."
-              multiline
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-            />
-          </FormControl>
+          </Grid>
           <Button variant="contained" color="green" onClick={handleSubmit}>
             Post Job
           </Button>
-        </Box>
+        </Card>
       )}
     </>
   );

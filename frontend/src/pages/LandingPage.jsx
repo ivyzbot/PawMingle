@@ -30,7 +30,6 @@ function LandingPage() {
     <>
       <video autoPlay muted loop id="myVideo">
         <source src="/pet_video.webm" type="video/webm" />
-        {/* <source src="../assets/1.mp4" type="video/mp4" /> */}
       </video>
       <Container maxWidth="md">
         <Box
@@ -62,7 +61,10 @@ function LandingPage() {
                     fontWeight={700}
                     gutterBottom
                   >
-                    Join Our Pet-Lover Community Today!
+                    Join Pawmingle
+                  </Typography>
+                  <Typography variant="h6" gutterBottom>
+                    Our Pet-Lover Community!
                   </Typography>
                   <Grid container spacing={1} columns={16} mt={2}>
                     <Grid item xs={4}>

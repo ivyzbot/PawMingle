@@ -5,7 +5,7 @@ export default function Copyright() {
   return (
     <>
       <Outlet />
-      <Typography variant="body2" color="text.secondary" align="center">
+      <Typography variant="body2" color="text.secondary" align="center" mt={2}>
         {'Copyright © '}
         <Link color="inherit" href="https://mui.com/">
           PawMingle

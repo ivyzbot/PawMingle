@@ -4,7 +4,15 @@ import UserAvatar from './UserAvatar';
 import { UserContext } from '../../pages/Homepage';
 import AddPetCard from './AddPetCard';
 import PetCard from './PetCard';
-import { Box, Button, Card, Rating, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  Divider,
+  Grid,
+  Rating,
+  Typography,
+} from '@mui/material';
 import { useGetJobCountQuery } from '../../hooks/jobHook';
 import { useGetReviewCountQuery } from '../../hooks/reviewHooks';
 import { useGetUserPetQuery } from '../../hooks/userHook';
@@ -36,44 +44,81 @@ export default function UserInfoSide() {
   // console.log('reviewCount', petData);
 
   return (
-    <Card sx={{ minHeight: 500, mt: 5 }}>
-      <UserAvatar name={states ? states.userID : 'no user info'} />
+    <Card
+      elevation={0}
+      sx={{
+        minHeight: 500,
+        mt: 5,
+        ml: 2,
+        border: '1px solid',
+        borderColor: 'grey.main',
+        borderRadius: 5,
+        paddingTop: 3,
+        paddingBottom: 3,
+        px: 2,
+      }}
+    >
+      <UserAvatar name={states ? states.userID : 'no user info'} size={80} />
       {isJobCountLoading || isReviewLoading || isPetDataLoading ? (
         <Typography>loading</Typography>
       ) : isJobCountError || isReviewCountError || isPetDataError ? (
         <Typography>{isJobCountError}</Typography>
       ) : (
         <>
-          <Box>
-            <Typography>{jobCount.data.jobsPosted}</Typography>
-            <Typography>Jobs Posted</Typography>
-            <Typography>Score As a Hirer:</Typography>
-            <Rating
-              name="half-rating-read"
-              defaultValue={
-                reviewCount && reviewCount.data.reviewsHirer[0].avg
-                  ? reviewCount.data.reviewsHirer[0].avg
-                  : 0
-              }
-              precision={0.5}
-              readOnly
-            />
-          </Box>
-          <Box>
-            <Typography>{jobCount.data.jobsDone}</Typography>
-            <Typography>Jobs Taken</Typography>
-            <Typography>Score As a Service Provider:</Typography>
-            <Rating
-              name="half-rating-read"
-              defaultValue={
-                reviewCount && reviewCount.data.reviewsProvider[0].avg
-                  ? reviewCount.data.reviewsProvider[0].avg
-                  : 0
-              }
-              precision={0.5}
-              readOnly
-            />
-          </Box>
+          <Typography variant="h2" my={2}>
+            {states ? states.name : ''}
+          </Typography>
+          <Divider sx={{ borderBottomWidth: 2 }} />
+
+          <Grid container columnSpacing={2} px={8} py={4}>
+            <Grid item xs={2} marginRight={4}>
+              <Typography variant="h2" color="primary.main" fontWeight={400}>
+                {jobCount.data.jobsPosted}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={8}>
+              <Typography align="left">Jobs Pawsted</Typography>
+              <Typography align="left">Score As a Hirer:</Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={
+                    reviewCount && reviewCount.data.reviewsHirer[0].avg
+                      ? reviewCount.data.reviewsHirer[0].avg
+                      : 0
+                  }
+                  precision={0.5}
+                  readOnly
+                />
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Grid container columnSpacing={2} px={8} py={2}>
+            <Grid item xs={2} marginRight={4}>
+              <Typography variant="h2" color="primary.main" fontWeight={400}>
+                {jobCount.data.jobsDone}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={8}>
+              <Typography align="left">Jobs Taken</Typography>
+              <Typography align="left">Score As a Service Provider:</Typography>
+              <Box sx={{ textAlign: 'left' }}>
+                <Rating
+                  name="half-rating-read"
+                  defaultValue={
+                    reviewCount && reviewCount.data.reviewsProvider[0].avg
+                      ? reviewCount.data.reviewsProvider[0].avg
+                      : 0
+                  }
+                  precision={0.5}
+                  readOnly
+                />
+              </Box>
+            </Grid>
+          </Grid>
         </>
       )}
       <Button onClick={() => navigate('user/jobs')}> Me Page</Button>

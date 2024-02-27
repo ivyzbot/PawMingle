@@ -49,9 +49,10 @@ const theme = createTheme({
   palette: {
     primary: { main: '#ce93d8' },
     secondary: { main: '#f48fb1' },
-    green: { main: '#aed581' },
-    text: { main: '#aed581', secondary: '#f48fb1' },
-    light: { main: '#ffebee' },
+    green: { main: '#aed581', secondary: '#1b5e20' },
+    text: { main: '#aed581', secondary: '#616161' },
+    light: { main: '#ffebee', secondary: '#fff5f6' },
+    grey: { main: '#e0e0e0', secondary: '#f5f5f5', dark: '#9e9e9e' },
   },
   typography: {
     fontFamily: ['Lato', 'sans-serif'].join(','),

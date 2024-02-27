@@ -14,7 +14,9 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import PetsIcon from '@mui/icons-material/Pets';
+import UserAvatar from '../User/UserAvatar';
+import { ButtonGroup, Divider } from '@mui/material';
 
 const pages = ['Feeds', 'Jobs'];
 const settings = ['Update Password', 'Logout'];
@@ -39,7 +41,7 @@ export default function NavBar() {
         navigate('/home/jobs');
         break;
       case 'Feeds':
-        navigate('/home/feeds');
+        // navigate('/home/feeds');
         break;
     }
     setAnchorElNav(null);
@@ -61,7 +63,27 @@ export default function NavBar() {
     <AppBar position="static" color="primary">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 1,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'Shantell+Sans',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Paw
+          </Typography>
+          <PetsIcon
+            color="light"
+            sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}
+          />
           <Typography
             variant="h6"
             noWrap
@@ -70,14 +92,14 @@ export default function NavBar() {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              fontFamily: 'Shantell+Sans',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Mingle
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -116,7 +138,7 @@ export default function NavBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <PetsIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -126,25 +148,28 @@ export default function NavBar() {
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: 'Shantell+Sans',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            Paw Mingle
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          <Box ml={5} sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
+                size="40"
                 onClick={handleCloseNavMenu}
                 sx={{
-                  my: 2,
-                  color: 'white',
+                  my: 1,
                   display: 'block',
-                  mx: 1,
+                  mx: 3,
+                  color: 'white',
+                  fontSize: '20px',
                   fontWeight: 'bold',
                 }}
               >
@@ -156,7 +181,11 @@ export default function NavBar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
+                <UserAvatar
+                  size={40}
+                  name={state ? state.userID : 'no user info'}
+                />
               </IconButton>
             </Tooltip>
             <Menu
