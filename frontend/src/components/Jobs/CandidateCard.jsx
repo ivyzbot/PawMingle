@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useUpdateJobMutation } from '../../hooks/jobHook';
 import AddReviewCard from '../Reviews/AddReviewCard';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 
 export default function CadidateCard({
   name,

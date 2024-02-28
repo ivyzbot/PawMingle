@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../pages/Homepage';
 import { useGetUserReviewQuery } from '../../hooks/reviewHooks';
 import UserReviewCard from './UserReviewCard';
-import { Box, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 export default function UserReviewPage() {
   const states = useContext(UserContext);
   const {
@@ -18,22 +18,24 @@ export default function UserReviewPage() {
       ) : isUserReviewError ? (
         <Typography>{isUserReviewError}</Typography>
       ) : (
-        <Box>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {userReviewData.data.giveReviews.map((reviewData) => (
-            <UserReviewCard
-              key={reviewData._id}
-              reviewData={reviewData}
-              reviewType="giveReviews"
-            />
+            <Grid item xs={4} key={reviewData._id}>
+              <UserReviewCard
+                reviewData={reviewData}
+                reviewType="giveReviews"
+              />
+            </Grid>
           ))}
           {userReviewData.data.receiveReviews.map((reviewData) => (
-            <UserReviewCard
-              key={reviewData._id}
-              reviewData={reviewData}
-              reviewType="receiveReviews"
-            />
+            <Grid item xs={4} key={reviewData._id}>
+              <UserReviewCard
+                reviewData={reviewData}
+                reviewType="receiveReviews"
+              />
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       )}
     </>
   );

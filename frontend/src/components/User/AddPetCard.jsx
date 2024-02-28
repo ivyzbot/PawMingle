@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   ImageListItem,
-  Input,
   Modal,
   TextField,
   Typography,
@@ -11,6 +10,20 @@ import { uploadImage } from '../../utilities/helperFuncs';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../pages/Homepage';
 import { useAddPetMutation } from '../../hooks/userHook';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { styled } from '@mui/material/styles';
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
 export default function AddPetCard({ open, setOpen }) {
   const [base64, setBase64] = useState('');
@@ -64,8 +77,10 @@ export default function AddPetCard({ open, setOpen }) {
           transform: 'translate(-50%, -50%)',
           width: 400,
           bgcolor: 'background.paper',
-          border: '2px solid #000',
-          boxShadow: 24,
+          boxShadow: 0,
+          border: '1px solid',
+          borderColor: 'grey.main',
+          borderRadius: 5,
           p: 4,
         }}
       >
@@ -83,22 +98,36 @@ export default function AddPetCard({ open, setOpen }) {
         <TextField
           label="DESCRIPTION"
           placeholder="How's your pet like"
+          fullWidth
           multiline
+          rows={4}
           name="petDescription"
           onChange={handleChange}
         />
-        <Input
-          type="file"
-          sx={{ mt: 2, mb: 2 }}
-          onChange={handleUpload}
-        ></Input>
+        <Box my={2}>
+          <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+            onChange={handleUpload}
+          >
+            Upload file
+            <VisuallyHiddenInput type="file" />
+          </Button>
+        </Box>
         <Box>
-          <Typography>Image Preview</Typography>
+          <Typography variant="subtitle1" color="#616161" gutterBottom>
+            Image Preview
+          </Typography>
           <ImageListItem>
-            <img src={base64 || null} />
+            <img src={base64 || null} style={{ borderRadius: '8px' }} />
           </ImageListItem>
         </Box>
-        <Button onClick={handleSubmit}> Add Pet</Button>
+        <Button onClick={handleSubmit} variant="outlined">
+          Add Pet
+        </Button>
       </Box>
     </Modal>
   );

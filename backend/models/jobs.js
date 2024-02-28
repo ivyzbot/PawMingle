@@ -19,7 +19,8 @@ async function getAllJobs() {
   const allJobs = await jobsDao
     .find({})
     .populate('posterID', ['_id', 'name'])
-    .populate('myPet');
+    .populate('myPet')
+    .sort({ createdAt: -1 });
   // console.log('Get all jobs: ', allJobs);
   return { success: true, data: allJobs };
 }
