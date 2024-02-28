@@ -32,7 +32,12 @@ export default function ViewerButtons({
     if (jobStatus === 'Pending') {
       return (
         <>
-          <Button color="primary" variant="outlined" size="small">
+          <Button
+            color="primary"
+            variant="outlined"
+            size="small"
+            sx={{ mr: '10px' }}
+          >
             Message
           </Button>
           <Button

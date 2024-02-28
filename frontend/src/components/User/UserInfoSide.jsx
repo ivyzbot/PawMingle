@@ -16,6 +16,9 @@ import {
 import { useGetJobCountQuery } from '../../hooks/jobHook';
 import { useGetReviewCountQuery } from '../../hooks/reviewHooks';
 import { useGetUserPetQuery } from '../../hooks/userHook';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 
 export default function UserInfoSide() {
   const states = useContext(UserContext);
@@ -68,6 +71,13 @@ export default function UserInfoSide() {
           <Typography variant="h2" my={2}>
             {states ? states.name : ''}
           </Typography>
+          <Button
+            onClick={() => navigate('user/jobs')}
+            sx={{ fontSize: 18 }}
+            startIcon={<DirectionsWalkIcon />}
+          >
+            Me Page
+          </Button>
           <Divider sx={{ borderBottomWidth: 2 }} />
 
           <Grid container columnSpacing={2} px={8} py={4}>
@@ -121,11 +131,19 @@ export default function UserInfoSide() {
           </Grid>
         </>
       )}
-      <Button onClick={() => navigate('user/jobs')}> Me Page</Button>
-      <Button onClick={() => setOpen(true)}> Add My Pet</Button>
+      <Divider sx={{ borderBottomWidth: 2, my: 1 }} />
+      <Button
+        onClick={() => setOpen(true)}
+        sx={{ fontSize: 18, my: 1 }}
+        startIcon={<FileUploadIcon />}
+      >
+        Add My Pet
+      </Button>
       <AddPetCard open={open} setOpen={setOpen} />
       <Box>
-        <Typography>My Pets:</Typography>
+        <Typography variant="h6" mb={1}>
+          My Pets:
+        </Typography>
         {!petData ||
         !petData.data ||
         !petData.data.petsOwn ||

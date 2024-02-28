@@ -41,10 +41,12 @@ async function getReviewCount(userID) {
 async function getUserReviews(userID) {
   const receiveReviews = await reviewsDao
     .find({ receiverID: userID })
-    .populate('giverID', ['_id', 'name']);
+    .populate('giverID', ['_id', 'name'])
+    .populate('receiverID', ['_id', 'name']);
   // console.log('Get userJobs: ', postJobs);
   const giveReviews = await reviewsDao
     .find({ giverID: userID })
+    .populate('giverID', ['_id', 'name'])
     .populate('receiverID', ['_id', 'name']);
   const userReviews = {
     receiveReviews: receiveReviews,

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../pages/Homepage';
 import UserJobCard from './UserJobCard';
 import { useGetUserJobQuery } from '../../hooks/jobHook';
-import { Box, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 export default function UserJobPage() {
   const states = useContext(UserContext);
@@ -21,22 +21,27 @@ export default function UserJobPage() {
       ) : isUserJobError ? (
         <Typography>{isUserJobError}</Typography>
       ) : (
-        <Box>
+        <Grid
+          container
+          rowSpacing={3}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          mt={2}
+        >
           {userJobData.data.postJobs.map((jobData) => (
-            <UserJobCard
-              key={jobData._id}
-              jobData={jobData}
-              jobType="postJobs"
-            />
+            <Grid key={jobData._id} item xs={12}>
+              <UserJobCard jobData={jobData} jobType="postJobs" />
+            </Grid>
           ))}
           {userJobData.data.doneJobs.map((jobData) => (
-            <UserJobCard
-              key={jobData._id}
-              jobData={jobData}
-              jobType="doneJobs"
-            />
+            <Grid key={jobData._id} item xs={12}>
+              <UserJobCard
+                key={jobData._id}
+                jobData={jobData}
+                jobType="doneJobs"
+              />
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       )}
     </>
   );

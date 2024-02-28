@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useCreateReviewMutation } from '../../hooks/reviewHooks';
 import { useUpdateJobMutation } from '../../hooks/jobHook';
-import { Box, Button, Modal, Rating, Typography } from '@mui/material';
+import { Box, Button, Grid, Modal, Rating, Typography } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
 
 export default function AddReviewCard({ open, setOpen, jobData, setJobData }) {
   const [score, setScore] = useState(0);
@@ -41,23 +42,46 @@ export default function AddReviewCard({ open, setOpen, jobData, setJobData }) {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: 400,
+          boxShadow: 0,
           bgcolor: 'background.paper',
-          border: '2px solid #000',
-          boxShadow: 24,
+          border: '1px solid',
+          borderColor: 'grey.main',
+          borderRadius: 5,
           p: 4,
         }}
       >
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          mt={1}
+          mb={2}
+          ml={3}
+        >
           How do you feel about the user?
         </Typography>
-        <Rating
-          name="simple-controlled"
-          value={score}
-          onChange={(evt, newScore) => {
-            setScore(newScore);
-          }}
-        />
-        <Button onClick={handleSubmit}>Submit Review</Button>
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-around"
+          alignItems="center"
+          columnSpacing={4}
+        >
+          <Grid item sx={6}>
+            <Rating
+              name="simple-controlled"
+              value={score}
+              onChange={(evt, newScore) => {
+                setScore(newScore);
+              }}
+            />
+          </Grid>
+          <Grid item sx={6}>
+            <Button onClick={handleSubmit} endIcon={<SendIcon />}>
+              Submit Review
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Modal>
   );
