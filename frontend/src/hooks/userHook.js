@@ -57,6 +57,7 @@ function useGetUserPetQuery(userID) {
   return useQuery({
     queryKey: ['userPet', userID],
     queryFn: async () => (await apiClient.get(`users/getpet/${userID}`)).data,
+    fetchPolicy: 'network-only',
   });
 }
 

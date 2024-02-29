@@ -25,7 +25,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function AddPetCard({ open, setOpen }) {
+export default function AddPetCard({ open, setOpen, refresh, setRefresh }) {
   const [base64, setBase64] = useState('');
   const [formData, setFormData] = useState({});
   const states = useContext(UserContext);
@@ -59,6 +59,7 @@ export default function AddPetCard({ open, setOpen }) {
     const bodyToUpdate = { ...formData, userID: states.userID };
     console.log('bodyToUpdate', bodyToUpdate);
     await addPet(bodyToUpdate);
+    setRefresh(!refresh);
     setOpen(false);
   }
 
