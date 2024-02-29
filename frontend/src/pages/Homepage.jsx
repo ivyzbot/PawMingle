@@ -31,7 +31,7 @@ export default function Homepage() {
         <NavBar />
         <Grid
           container
-          columnSpacing={8}
+          columnSpacing={4}
           sx={{ backgroundColor: 'grey.secondary' }}
         >
           <Grid item xs={3.5}>
@@ -40,7 +40,7 @@ export default function Homepage() {
           <Grid item xs={6}>
             <Outlet />
           </Grid>
-          <Grid item xs>
+          <Grid item xs={2.5}>
             <PetFinderSide />
           </Grid>
         </Grid>

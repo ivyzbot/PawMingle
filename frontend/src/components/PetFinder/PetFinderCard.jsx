@@ -1,6 +1,5 @@
 import { Button, Card, CardMedia, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import he from 'he';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 export default function PetFinderCard({ pet }) {
@@ -8,7 +7,6 @@ export default function PetFinderCard({ pet }) {
     <Grid item xs={12}>
       <Card
         sx={{
-          maxWidth: 300,
           border: '1px solid',
           borderColor: 'grey.main',
           borderRadius: 5,
@@ -21,7 +19,7 @@ export default function PetFinderCard({ pet }) {
             component="img"
             image={pet.imgURL.small}
             alt="No Pet Picture"
-            sx={{ maxWidth: 300, maxHeight: 300 }}
+            sx={{ maxHeight: 300 }}
           />
         ) : null}
         <Typography variant="h6" m={2}>
@@ -29,7 +27,7 @@ export default function PetFinderCard({ pet }) {
           {pet.species ? pet.species : 'pet'}
         </Typography>
         <Typography variant="subtitle1" mx={2}>
-          {pet.description ? he.decode(pet.description) : null}
+          {pet.description ? pet.description : null}
         </Typography>
         <Link to={pet.url ? pet.url : null} target="_blank" my={1}>
           <Button variant="text" endIcon={<QuestionAnswerIcon />}>

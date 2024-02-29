@@ -6,6 +6,7 @@ import {
 import { fetchPetToken } from '../../utilities/helperFuncs';
 import PetFinderCard from './PetFinderCard';
 import { Box, Grid, Typography } from '@mui/material';
+import he from 'he';
 
 export default function PetFinderSide() {
   const { mutateAsync: getToken } = useGetFinderTokenMutation();

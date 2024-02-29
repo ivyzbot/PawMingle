@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import qs from 'qs';
+import he from 'he';
 import { petFinderTokenClient, petFinderClient } from '../apiClient/petfinder';
 
 function useGetFinderTokenMutation() {
@@ -48,7 +49,7 @@ async function fetchPetFinder(getTokenFn) {
   if (rawData && rawData.length !== 0) {
     rawData.map((animal) =>
       petData.push({
-        description: animal.description,
+        description: animal.description ? he.decode(animal.description) : null,
         name: animal.name,
         id: animal.id,
         imgURL: animal.primary_photo_cropped,
