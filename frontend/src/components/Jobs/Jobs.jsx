@@ -22,7 +22,7 @@ export default function Jobs() {
   // const states = useContext(UserContext);
   // console.log('UserContext:', states);
   const { data: jobsData, isLoading, error } = useGetJobsQuery();
-  console.log('Jobs Data: ', jobsData);
+  // console.log('Jobs Data: ', jobsData);
   const navigate = useNavigate();
   function handleClick() {
     navigate('new');
@@ -33,7 +33,7 @@ export default function Jobs() {
     petSelected: '',
   });
   const [jobDataFiltered, setJobDataFiltered] = useState();
-  console.log('jobDataFiltered', jobDataFiltered);
+  // console.log('jobDataFiltered', jobDataFiltered);
 
   function applyFilter() {
     if (!jobsData) {
@@ -67,7 +67,7 @@ export default function Jobs() {
     const newSelected = { ...selected, [evt.target.name]: evt.target.value };
     setSelectJob(newSelected);
   }
-  console.log(selected);
+  // console.log(selected);
 
   return (
     <Box sx={{ my: 2 }}>

@@ -31,3 +31,13 @@ export async function uploadImage(evt) {
   const base64 = await convertBase64(file);
   return base64;
 }
+
+export async function fetchPetToken(queryFn) {
+  const petTokenData = await queryFn();
+  const currentTime = new Date();
+  const expiryTime = currentTime.setSeconds(
+    currentTime.getSeconds() + petTokenData.expires_in
+  );
+  localStorage.setItem('petToken', petTokenData.access_token);
+  localStorage.setItem('petTokenExpiry', expiryTime);
+}
