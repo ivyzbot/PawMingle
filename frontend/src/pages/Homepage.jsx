@@ -4,6 +4,7 @@ import { getTokenDetails } from '../utilities/helperFuncs.js';
 import NavBar from '../components/Layout/NavBar';
 import UserInfoSide from '../components/User/UserInfoSide.jsx';
 import Grid from '@mui/material/Grid';
+import PetFinderSide from '../components/PetFinder/PetFinderSide.jsx';
 import { Box } from '@mui/material';
 
 export const UserContext = createContext({
@@ -40,7 +41,7 @@ export default function Homepage() {
             <Outlet />
           </Grid>
           <Grid item xs>
-            <Box>Pending</Box>
+            <PetFinderSide />
           </Grid>
         </Grid>
       </UserContext.Provider>
