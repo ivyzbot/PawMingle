@@ -37,7 +37,7 @@ export default function CreateJob() {
     location: '',
     price: 0,
     description: '',
-    myPet: '',
+    myPet: null,
   });
 
   console.log('formData', formData);
@@ -64,10 +64,14 @@ export default function CreateJob() {
   async function handleSubmit(evt) {
     evt.preventDefault();
     const newFormData = { ...formData, posterID: states.userID };
-    console.log('Job To Submit:', newFormData);
+    // console.log('Job To Submit:', newFormData);
     delete newFormData.error;
+    if (!newFormData.myPet) {
+      delete newFormData.myPet;
+    }
     await postJob(newFormData);
-    navigate('/');
+    navigate('/home/jobs');
+    navigate(0);
   }
 
   return (

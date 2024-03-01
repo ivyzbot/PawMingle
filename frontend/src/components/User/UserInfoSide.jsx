@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import UserAvatar from './UserAvatar';
 import { UserContext } from '../../pages/Homepage';
@@ -39,12 +39,17 @@ export default function UserInfoSide() {
     data: petData,
     isLoading: isPetDataLoading,
     error: isPetDataError,
+    refetch: petRefetch,
   } = useGetUserPetQuery(states ? states.userID : null);
   const [open, setOpen] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   // console.log('isLoading', isPetDataLoading);
   // console.log('error', isPetDataError);
-  // console.log('reviewCount', petData);
+  // console.log('reviewCount', reviewCount);
+  useEffect(() => {
+    petRefetch();
+  }, [refresh]);
 
   return (
     <Card
@@ -94,7 +99,7 @@ export default function UserInfoSide() {
                 <Rating
                   name="half-rating-read"
                   defaultValue={
-                    reviewCount && reviewCount.data.reviewsHirer[0].avg
+                    reviewCount && reviewCount.data.reviewsHirer.length > 0
                       ? reviewCount.data.reviewsHirer[0].avg
                       : 0
                   }
@@ -119,7 +124,7 @@ export default function UserInfoSide() {
                 <Rating
                   name="half-rating-read"
                   defaultValue={
-                    reviewCount && reviewCount.data.reviewsProvider[0].avg
+                    reviewCount && reviewCount.data.reviewsProvider.length > 0
                       ? reviewCount.data.reviewsProvider[0].avg
                       : 0
                   }
@@ -139,7 +144,12 @@ export default function UserInfoSide() {
       >
         Add My Pet
       </Button>
-      <AddPetCard open={open} setOpen={setOpen} />
+      <AddPetCard
+        open={open}
+        setOpen={setOpen}
+        refresh={refresh}
+        setRefresh={setRefresh}
+      />
       <Box>
         <Typography variant="h6" mb={1}>
           My Pets:

@@ -22,6 +22,7 @@ export default function Jobs() {
   // const states = useContext(UserContext);
   // console.log('UserContext:', states);
   const { data: jobsData, isLoading, error } = useGetJobsQuery();
+  // const [refresh, setRefresh] = useState(true);
   // console.log('Jobs Data: ', jobsData);
   const navigate = useNavigate();
   function handleClick() {

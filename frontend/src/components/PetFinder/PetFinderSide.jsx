@@ -35,7 +35,7 @@ export default function PetFinderSide() {
   //   }
 
   return (
-    <Box mt={5}>
+    <Box mt={6}>
       <Typography
         variant="h6"
         sx={{
@@ -45,7 +45,7 @@ export default function PetFinderSide() {
       >
         Take Me Home
       </Typography>
-      <Grid container rowSpacing={1} mt={5}>
+      <Grid container rowSpacing={1} mt={6}>
         {!petFinderData ? (
           <Typography></Typography>
         ) : (
