@@ -7,6 +7,7 @@ module.exports = {
   getOneJob,
   getJobCount,
   getUserJobs,
+  deleteOneJob,
 };
 
 async function createJob(body) {
@@ -66,13 +67,30 @@ async function getUserJobs(userID) {
     .find({ posterID: userID })
     .populate('posterID', ['_id', 'name'])
     .populate('candidates', ['_id', 'name'])
-    .populate('myPet');
+    .populate('myPet')
+    .sort({ createdAt: -1 });
   // console.log('Get userJobs: ', postJobs);
   const doneJobs = await jobsDao
     .find({ selected: userID })
     .populate('posterID', ['_id', 'name'])
     .populate('candidates', ['_id', 'name'])
-    .populate('myPet');
+    .populate('myPet')
+    .sort({ createdAt: -1 });
   const userJobs = { postJobs: postJobs, doneJobs: doneJobs };
   return { success: true, data: userJobs };
+}
+
+async function deleteOneJob(jobID) {
+  const jobData = await jobsDao.findById(jobID);
+  let data = {};
+  let success = null;
+  if (jobData.jobStatus === 'Pending') {
+    data = await jobsDao.findByIdAndDelete(jobID);
+    success = true;
+  } else {
+    data = { result: 'Job status is not pending. Cannot delete' };
+    success = false;
+  }
+
+  return { success: success, data: data };
 }
