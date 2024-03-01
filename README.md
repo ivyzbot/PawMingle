@@ -16,7 +16,7 @@ https://pawmingle-frontend.onrender.com
 + Other Libraries
     + axios (HTTP client)
     + crypto-JS (encryption)
-    + boring-avatars (random avatar generator)
+    + [boring-avatars (random avatar generator)](https://boringavatars.com/)
     + moment (date formating)
     + he (HTML entities encoding/decoding)
     + qs (querystring parsing and stringifying)
