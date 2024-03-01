@@ -95,7 +95,8 @@ export async function uploadImage(evt) {
 + 3rd Party API
 
 ## Key Chanllenges:
-Conditional rendering of action buttons and button status for Job Card
++ Conditional rendering of action buttons and button status for Job Card
++ Exploring new libraries
 
 ## Next Steps:
 #### In-app messaging
