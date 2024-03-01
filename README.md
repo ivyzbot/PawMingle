@@ -31,7 +31,8 @@ https://pawmingle-frontend.onrender.com
 ## Designs:
 + [Wireframe](https://drive.google.com/drive/folders/1a622myBvC5iAEqe--LcPogK7iSXzdEU4?usp=sharing)
 + ERD:
-![image](https://github.com/ivyzbot/PawMingle/assets/10040970/c29050e2-3bc5-41ec-b93c-f00879f71368)
+![image](https://github.com/ivyzbot/PawMingle/assets/10040970/efaf9b82-f739-4577-8ef1-21f5f87e7d37)
+
 
 
 
