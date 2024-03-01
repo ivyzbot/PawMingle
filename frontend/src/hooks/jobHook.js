@@ -55,6 +55,14 @@ function useGetUserJobQuery(userID) {
   });
 }
 
+function useDeleteJobMutation() {
+  return useMutation({
+    mutationFn: async (jobID) => {
+      return (await apiClient.delete(`jobs/delete/${jobID}`)).data;
+    },
+  });
+}
+
 export {
   useCreateJobMutation,
   useGetJobsQuery,
@@ -62,4 +70,5 @@ export {
   useGetOneJobQuery,
   useGetJobCountQuery,
   useGetUserJobQuery,
+  useDeleteJobMutation,
 };

@@ -9,5 +9,6 @@ router.get('/getone/:jobid', jobsCtrl.getOneJob);
 router.get('/getcount/:userid', jobsCtrl.getJobCount);
 router.get('/getall/:userid', jobsCtrl.getUserJobs);
 router.patch('/update/:jobid', jobsCtrl.updateJob);
+router.delete('/delete/:jobid', jobsCtrl.deleteOneJob);
 
 module.exports = router;

@@ -7,6 +7,7 @@ module.exports = {
   getOneJob,
   getJobCount,
   getUserJobs,
+  deleteOneJob,
 };
 
 async function createJob(req, res) {
@@ -100,6 +101,22 @@ async function getUserJobs(req, res) {
     res.json(jobData);
   } catch (err) {
     console.log('controller-get-user-jobs-err', err);
+    res.status(500).json({ errorMsg: err.message });
+  }
+}
+
+async function deleteOneJob(req, res) {
+  const jobID = req.params.jobid;
+  try {
+    const jobData = await jobMdl.deleteOneJob(jobID);
+    // console.log('controller-deleteOneJob', jobData);
+    if (!jobData.success) {
+      res.status(400).json({ errorMsg: jobData.data });
+      return;
+    }
+    res.json(jobData);
+  } catch (err) {
+    console.log('controller-delete-one-job', err);
     res.status(500).json({ errorMsg: err.message });
   }
 }

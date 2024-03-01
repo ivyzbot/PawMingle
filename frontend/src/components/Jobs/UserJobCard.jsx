@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../pages/Homepage';
 import {
   Box,
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -11,6 +12,7 @@ import {
   Collapse,
   Divider,
   Grid,
+  Modal,
   Typography,
 } from '@mui/material';
 import UserAvatar from '../User/UserAvatar';
@@ -27,13 +29,17 @@ import CategoryIcon from '@mui/icons-material/Category';
 import PetsIcon from '@mui/icons-material/Pets';
 import PosterButtons from './PosterButtons';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { useDeleteJobMutation } from '../../hooks/jobHook';
+import { useNavigate } from 'react-router';
 
-export default function UserJobCard({ jobData, jobType }) {
+export default function UserJobCard({ jobData, jobType, refresh, setRefresh }) {
   const states = useContext(UserContext);
   const [jobDataDynamic, setJobDataDynamic] = useState(jobData);
   const isInCandidate = jobData.candidates.includes(states.userID);
   const isSelected = jobData.selected === states.userID;
   const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { mutateAsync: deleteJob } = useDeleteJobMutation();
 
   const buttonColor =
     jobDataDynamic.jobStatus === 'Pending'
@@ -42,6 +48,12 @@ export default function UserJobCard({ jobData, jobType }) {
 
   function handleExpandClick() {
     setExpanded(!expanded);
+  }
+
+  async function handleDelete() {
+    await deleteJob(jobData._id);
+    setOpen(false);
+    setRefresh(!refresh);
   }
   return (
     <>
@@ -204,7 +216,38 @@ export default function UserJobCard({ jobData, jobType }) {
             sx={{ borderBottomWidth: 2, width: '60%', margin: 'auto' }}
           />
           <CardContent>
-            <Typography paragraph fontWeight={700}>
+            <Button
+              variant="contained"
+              onClick={() => setOpen(true)}
+              disabled={jobDataDynamic.jobStatus === 'Pending' ? false : true}
+            >
+              Delete
+            </Button>
+            <Modal open={open} onClose={() => setOpen(false)}>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: 450,
+                  boxShadow: 0,
+                  bgcolor: 'background.paper',
+                  border: '1px solid',
+                  borderColor: 'grey.main',
+                  borderRadius: 5,
+                  p: 4,
+                }}
+              >
+                <Typography variant="h5" mb={2}>
+                  Are you sure you want to delete this job?
+                </Typography>
+                <Button variant="contained" onClick={handleDelete}>
+                  Confirm Delete
+                </Button>
+              </Box>
+            </Modal>
+            <Typography paragraph fontWeight={700} mt={2}>
               Job Details:
             </Typography>
             <Typography paragraph>{jobData.description}</Typography>

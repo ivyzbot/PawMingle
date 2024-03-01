@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../pages/Homepage';
 import UserJobCard from './UserJobCard';
 import { useGetUserJobQuery } from '../../hooks/jobHook';
@@ -10,9 +10,14 @@ export default function UserJobPage() {
     data: userJobData,
     isLoading: isUserJobLoading,
     error: isUserJobError,
+    refetch: userJobRefetch,
   } = useGetUserJobQuery(states ? states.userID : null);
+  const [refresh, setRefresh] = useState(false);
 
   //   console.log(userJobData);
+  useEffect(() => {
+    userJobRefetch();
+  }, [refresh]);
 
   return (
     <>
@@ -29,7 +34,12 @@ export default function UserJobPage() {
         >
           {userJobData.data.postJobs.map((jobData) => (
             <Grid key={jobData._id} item xs={12}>
-              <UserJobCard jobData={jobData} jobType="postJobs" />
+              <UserJobCard
+                jobData={jobData}
+                jobType="postJobs"
+                setRefresh={setRefresh}
+                refresh={refresh}
+              />
             </Grid>
           ))}
           {userJobData.data.doneJobs.map((jobData) => (
